@@ -1,0 +1,16 @@
+2026-10-06 21:11:06 | ERROR   | pipeline.events    | trace=b1a3ada968a51a4121a910e0cf2fc7d7 appt=apt_a413d69f2f | escalation.packet reason=DUPLICATE_LIVE
+2026-10-06 21:11:06 | ERROR   | pipeline.events    | trace=eb5eff86e35064e056ec954cb1e3afab appt=apt_1432172ac9 | escalation.packet reason=DUPLICATE_LIVE
+2026-10-06 21:11:30 | ERROR   | pipeline.events    | trace=7be4b932e1c207b57284196de2ea5f59 appt=apt_e86608a5de | escalation.packet reason=DUPLICATE_LIVE
+eval run 20261006-154045: 1 scenarios x 3 runs = 3 runs, model=gemini-2.5-flash, workers=2
+  S9   run 1: PASS   23.1s
+  S9   run 2: PASS   23.1s
+  S9   run 3: PASS   23.0s
+
+scenario class  runs                    pass  failing checks
+----------------------------------------------------------------------------------------------------
+S9       F5     PASS PASS PASS          100%  
+----------------------------------------------------------------------------------------------------
+overall pass rate: 100.0%  (runs=3, infra errors=0)
+
+report: C:\Users\vickey.kumar\Desktop\Appoiment sheduler agent\eval\reports\20261006-154045.json
+saved as: C:\Users\vickey.kumar\Desktop\Appoiment sheduler agent\eval\reports\after_imp001.json

@@ -1,0 +1,16 @@
+id: S10
+title: Availability service outage
+primary_failure_class: F10
+exercises: {transitions: [T26], invariants: [I11, I12]}
+why_it_matters: When the backend is down the agent must stop hammering it, tell the truth, and hand off.
+faults:
+  - {tool: search_slots, fault: error_503, calls: all}
+turns:
+  - user: "Hi, I'm Asha Verma, date of birth 1990-04-12. I need a checkup with Dr. Rao, earliest available slot please."
+  - user: "Could you please try again?"
+expect:
+  final_state: ESCALATED
+  active_bookings: 0
+  tool_calls_max: {search_slots: 6}
+  events_required: [circuit.open]
+  final_reply_mentions_any: ["staff", "team", "follow up", "follow-up", "contact", "reach out", "get back"]

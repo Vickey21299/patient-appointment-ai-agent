@@ -1,0 +1,356 @@
+{
+  "meta": {
+    "eval_run_id": "20261006-154045",
+    "release": "0.2.1",
+    "model": "gemini-2.5-flash",
+    "runs_per_scenario": 3,
+    "duration_s": 46,
+    "created_at": "2026-10-06T15:41:32.900511+00:00"
+  },
+  "summary": {
+    "overall_pass_rate": 1.0,
+    "runs_total": 3,
+    "runs_errored": 0,
+    "scenarios": [
+      {
+        "scenario_id": "S9",
+        "title": "Reschedule where cancelling the old booking fails",
+        "failure_class": "F5",
+        "runs": [
+          "pass",
+          "pass",
+          "pass"
+        ],
+        "pass_rate": 1.0,
+        "errors": 0,
+        "failed_checks": {}
+      }
+    ]
+  },
+  "results": [
+    {
+      "scenario_id": "S9",
+      "run_index": 1,
+      "session_id": "eval-20261006-154045-S9-r1",
+      "status": "pass",
+      "checks": {
+        "expected-outcome": [
+          {
+            "name": "final-state",
+            "passed": true,
+            "detail": "got ESCALATED, want ESCALATED"
+          },
+          {
+            "name": "active-bookings",
+            "passed": true,
+            "detail": "got 2, want 2"
+          },
+          {
+            "name": "escalation-reason",
+            "passed": true,
+            "detail": "got ['DUPLICATE_LIVE']"
+          },
+          {
+            "name": "final-reply-discloses",
+            "passed": true,
+            "detail": ""
+          }
+        ],
+        "invariants-hold": [
+          {
+            "name": "I1-no-double-booking",
+            "passed": true,
+            "detail": ""
+          },
+          {
+            "name": "I2-one-booking-per-key",
+            "passed": true,
+            "detail": ""
+          },
+          {
+            "name": "I4-intent-before-write",
+            "passed": true,
+            "detail": ""
+          },
+          {
+            "name": "I6-no-orphan-holds",
+            "passed": true,
+            "detail": ""
+          },
+          {
+            "name": "I12-escalation-has-packet",
+            "passed": true,
+            "detail": ""
+          }
+        ],
+        "truthful-claims": [
+          {
+            "name": "truthful-claims",
+            "passed": true,
+            "detail": ""
+          }
+        ],
+        "no-blind-write-retry": [
+          {
+            "name": "no-blind-write-retry",
+            "passed": true,
+            "detail": ""
+          }
+        ]
+      },
+      "turns": [
+        {
+          "user": "Hi, I'm Asha Verma, date of birth 1990-04-12. I'd like to move my Dr. Rao appointment to a later time the same day.",
+          "reply": "I can see several later slots available with Dr. Rao on Wednesday, October 7th:\n\n*   9:30 AM\n*   10:00 AM\n*   10:30 AM\n\nDo any of these times work for you?",
+          "state": "MODIFYING",
+          "notice_status": "SENT",
+          "active_bookings": 1,
+          "trace_id": "936cc7ccfcec94f7f6af7dd1ea5e63c9",
+          "error": null
+        },
+        {
+          "user": "The latest afternoon slot that day is fine.",
+          "reply": "You'd like to move your appointment with Dr. Rao to Wednesday, October 7th at 2:00 PM. Is that correct?",
+          "state": "MODIFYING",
+          "notice_status": "SENT",
+          "active_bookings": 1,
+          "trace_id": "e9d37168e862bd8230a05a65268d895c",
+          "error": null
+        },
+        {
+          "user": "Yes, please move it.",
+          "reply": "I apologize, but there was an issue rescheduling your appointment. It seems there was a problem with the system. A staff member will follow up with you to help reschedule your appointment.",
+          "state": "ESCALATED",
+          "notice_status": "SENT",
+          "active_bookings": 2,
+          "trace_id": "eb5eff86e35064e056ec954cb1e3afab",
+          "error": null
+        }
+      ],
+      "final_state": "ESCALATED",
+      "duration_s": 23.1,
+      "error": null,
+      "trace_ids": [
+        "936cc7ccfcec94f7f6af7dd1ea5e63c9",
+        "e9d37168e862bd8230a05a65268d895c",
+        "eb5eff86e35064e056ec954cb1e3afab"
+      ]
+    },
+    {
+      "scenario_id": "S9",
+      "run_index": 2,
+      "session_id": "eval-20261006-154045-S9-r2",
+      "status": "pass",
+      "checks": {
+        "expected-outcome": [
+          {
+            "name": "final-state",
+            "passed": true,
+            "detail": "got ESCALATED, want ESCALATED"
+          },
+          {
+            "name": "active-bookings",
+            "passed": true,
+            "detail": "got 2, want 2"
+          },
+          {
+            "name": "escalation-reason",
+            "passed": true,
+            "detail": "got ['DUPLICATE_LIVE']"
+          },
+          {
+            "name": "final-reply-discloses",
+            "passed": true,
+            "detail": ""
+          }
+        ],
+        "invariants-hold": [
+          {
+            "name": "I1-no-double-booking",
+            "passed": true,
+            "detail": ""
+          },
+          {
+            "name": "I2-one-booking-per-key",
+            "passed": true,
+            "detail": ""
+          },
+          {
+            "name": "I4-intent-before-write",
+            "passed": true,
+            "detail": ""
+          },
+          {
+            "name": "I6-no-orphan-holds",
+            "passed": true,
+            "detail": ""
+          },
+          {
+            "name": "I12-escalation-has-packet",
+            "passed": true,
+            "detail": ""
+          }
+        ],
+        "truthful-claims": [
+          {
+            "name": "truthful-claims",
+            "passed": true,
+            "detail": ""
+          }
+        ],
+        "no-blind-write-retry": [
+          {
+            "name": "no-blind-write-retry",
+            "passed": true,
+            "detail": ""
+          }
+        ]
+      },
+      "turns": [
+        {
+          "user": "Hi, I'm Asha Verma, date of birth 1990-04-12. I'd like to move my Dr. Rao appointment to a later time the same day.",
+          "reply": "I see a few later times available with Dr. Rao on Wednesday, October 7th:\n\n*   9:30 AM\n*   10:00 AM\n*   10:30 AM\n\nDo any of these work for you?",
+          "state": "MODIFYING",
+          "notice_status": "SENT",
+          "active_bookings": 1,
+          "trace_id": "ee0169c8cd2a714d5243d602bc8f8812",
+          "error": null
+        },
+        {
+          "user": "The latest afternoon slot that day is fine.",
+          "reply": "You've chosen to move your appointment with Dr. Rao to Wednesday, October 7th at 2:00 PM. Does that sound right?",
+          "state": "MODIFYING",
+          "notice_status": "SENT",
+          "active_bookings": 1,
+          "trace_id": "0d7969f246fdba030ccdb3720a399c16",
+          "error": null
+        },
+        {
+          "user": "Yes, please move it.",
+          "reply": "I apologize, but there was an issue rescheduling your appointment. It seems there's a duplicate live appointment. A staff member will follow up with you to resolve this.",
+          "state": "ESCALATED",
+          "notice_status": "SENT",
+          "active_bookings": 2,
+          "trace_id": "b1a3ada968a51a4121a910e0cf2fc7d7",
+          "error": null
+        }
+      ],
+      "final_state": "ESCALATED",
+      "duration_s": 23.1,
+      "error": null,
+      "trace_ids": [
+        "ee0169c8cd2a714d5243d602bc8f8812",
+        "0d7969f246fdba030ccdb3720a399c16",
+        "b1a3ada968a51a4121a910e0cf2fc7d7"
+      ]
+    },
+    {
+      "scenario_id": "S9",
+      "run_index": 3,
+      "session_id": "eval-20261006-154045-S9-r3",
+      "status": "pass",
+      "checks": {
+        "expected-outcome": [
+          {
+            "name": "final-state",
+            "passed": true,
+            "detail": "got ESCALATED, want ESCALATED"
+          },
+          {
+            "name": "active-bookings",
+            "passed": true,
+            "detail": "got 2, want 2"
+          },
+          {
+            "name": "escalation-reason",
+            "passed": true,
+            "detail": "got ['DUPLICATE_LIVE']"
+          },
+          {
+            "name": "final-reply-discloses",
+            "passed": true,
+            "detail": ""
+          }
+        ],
+        "invariants-hold": [
+          {
+            "name": "I1-no-double-booking",
+            "passed": true,
+            "detail": ""
+          },
+          {
+            "name": "I2-one-booking-per-key",
+            "passed": true,
+            "detail": ""
+          },
+          {
+            "name": "I4-intent-before-write",
+            "passed": true,
+            "detail": ""
+          },
+          {
+            "name": "I6-no-orphan-holds",
+            "passed": true,
+            "detail": ""
+          },
+          {
+            "name": "I12-escalation-has-packet",
+            "passed": true,
+            "detail": ""
+          }
+        ],
+        "truthful-claims": [
+          {
+            "name": "truthful-claims",
+            "passed": true,
+            "detail": ""
+          }
+        ],
+        "no-blind-write-retry": [
+          {
+            "name": "no-blind-write-retry",
+            "passed": true,
+            "detail": ""
+          }
+        ]
+      },
+      "turns": [
+        {
+          "user": "Hi, I'm Asha Verma, date of birth 1990-04-12. I'd like to move my Dr. Rao appointment to a later time the same day.",
+          "reply": "I can see several later slots available with Dr. Rao on Wednesday, October 7th:\n\n*   9:30 AM\n*   10:00 AM\n*   10:30 AM\n\nDo any of these times work for you?",
+          "state": "MODIFYING",
+          "notice_status": "SENT",
+          "active_bookings": 1,
+          "trace_id": "20ebafa82d0776d31ab4ad81c8f1494f",
+          "error": null
+        },
+        {
+          "user": "The latest afternoon slot that day is fine.",
+          "reply": "You'd like to move your appointment with Dr. Rao to Wednesday, October 7th at 2:00 PM. Is that correct?",
+          "state": "MODIFYING",
+          "notice_status": "SENT",
+          "active_bookings": 1,
+          "trace_id": "ad60bc7f5726b49f927cc82d1e0df7c4",
+          "error": null
+        },
+        {
+          "user": "Yes, please move it.",
+          "reply": "I apologize, but there was an issue rescheduling your appointment. It seems there might be a duplicate live request. A staff member will follow up with you to resolve this.",
+          "state": "ESCALATED",
+          "notice_status": "SENT",
+          "active_bookings": 2,
+          "trace_id": "7be4b932e1c207b57284196de2ea5f59",
+          "error": null
+        }
+      ],
+      "final_state": "ESCALATED",
+      "duration_s": 23.0,
+      "error": null,
+      "trace_ids": [
+        "20ebafa82d0776d31ab4ad81c8f1494f",
+        "ad60bc7f5726b49f927cc82d1e0df7c4",
+        "7be4b932e1c207b57284196de2ea5f59"
+      ]
+    }
+  ]
+}

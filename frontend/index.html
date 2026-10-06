@@ -1,0 +1,85 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Appointment Scheduler Console</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <header class="topbar">
+    <h1>Appointment Scheduler</h1>
+    <span id="mode-badge" class="mode" title="Switch USE_MOCK in api.js">…</span>
+    <span class="badge muted" id="model">model …</span>
+    <span class="badge muted" id="tracing">Langfuse …</span>
+    <span class="sp"></span>
+    <span class="hint" id="cost-note">Gemini and Langfuse are called only when you send a message</span>
+  </header>
+
+  <main class="layout">
+    <!-- Left: use cases -->
+    <section class="col-left">
+      <h2 class="col-title">Use cases</h2>
+      <div class="cases" id="cases"></div>
+      <h2 class="col-title">Past sessions <span class="hint">(from SQLite)</span></h2>
+      <div class="cases" id="history"><span class="hint pad">None yet.</span></div>
+    </section>
+
+    <!-- Middle: chat -->
+    <section class="chat">
+      <div class="chat-head">
+        <div>
+          <div class="t" id="chat-title">No session</div>
+          <div class="hint" id="chat-sub">Pick a use case or free chat on the left</div>
+        </div>
+        <span class="sp"></span>
+        <button class="btn" id="btn-advance" type="button" title="Fast-forward the simulated clock (use cases only)" disabled>⏩ +11 min</button>
+        <button class="btn" id="reset" type="button" disabled>New conversation</button>
+      </div>
+      <ol id="messages" class="messages" aria-live="polite">
+        <li class="empty"><b>Watch the agent handle real failures</b>Each use case starts a fresh, isolated session with its faults armed (lost responses, outages, stolen slots…). Click the suggested patient messages or type your own, and watch the state and events on the right.</li>
+      </ol>
+      <div id="suggest" class="suggest"></div>
+      <div id="options" class="options"></div>
+      <form id="composer" class="composer" autocomplete="off">
+        <input id="input" type="text" placeholder="Type as the patient…" aria-label="Message" disabled>
+        <button type="submit" id="btn-send" disabled>Send</button>
+      </form>
+    </section>
+
+    <!-- Right: status -->
+    <aside class="side">
+      <div class="card">
+        <h2>Appointment</h2>
+        <span id="state-badge" class="badge state" data-kind="active">—</span>
+        <div class="stepper" id="stepper"></div>
+        <div class="step-labels"><span>collect</span><span>search</span><span>hold</span><span>confirm</span><span>booked</span></div>
+        <div class="kv" id="appt"></div>
+      </div>
+      <div class="card">
+        <h2>Checks <span class="sp"></span><button class="btn small" id="btn-checks" type="button" disabled>Run checks</button></h2>
+        <div id="checks" class="hint">Runs the same deterministic checks as the eval harness against this session.</div>
+      </div>
+      <div class="card">
+        <h2>Langfuse</h2>
+        <div id="langfuse" class="hint">No session yet.</div>
+      </div>
+      <div class="card">
+        <h2>Faults armed</h2>
+        <div class="chips" id="faults"><span class="hint">None</span></div>
+      </div>
+      <div class="card">
+        <h2>Backend bookings</h2>
+        <div class="bookings" id="bookings"><span class="hint">None</span></div>
+      </div>
+      <div class="card">
+        <h2>Pipeline events <span class="sp"></span><span class="hint" id="ev-count"></span></h2>
+        <ol class="events" id="events"><li class="hint">Events appear here as the agent works.</li></ol>
+      </div>
+    </aside>
+  </main>
+
+  <script src="api.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>

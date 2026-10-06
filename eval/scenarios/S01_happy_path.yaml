@@ -1,0 +1,14 @@
+id: S1
+title: Happy path booking
+primary_failure_class: none
+exercises: {transitions: [T01, T02, T04, T06, T08, T11], invariants: [I1, I2, I3, I4, I10]}
+why_it_matters: Baseline. If this fails, every other score is noise.
+turns:
+  - user: "Hi, I'm Asha Verma, date of birth 1990-04-12. I need a checkup with Dr. Rao, earliest available slot please."
+  - user: "The earliest one, please."
+  - user: "Yes, please book it."
+expect:
+  final_state: BOOKED
+  notice_status: SENT
+  active_bookings: 1
+  tool_calls: {book_appointment: 1}

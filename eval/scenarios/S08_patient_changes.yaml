@@ -1,0 +1,17 @@
+id: S8
+title: Patient changes provider, then switches to another person
+primary_failure_class: F8
+exercises: {transitions: [T05, T10, T25], invariants: [I6, I8]}
+why_it_matters: Mid-flow changes must release holds and must never reuse one person's identity for another.
+turns:
+  - user: "Hi, I'm Asha Verma, date of birth 1990-04-12. I need a checkup with Dr. Rao, earliest available slot please."
+  - user: "Actually, could I see Dr. Mehta instead? Earliest slot please."
+  - user: "The earliest one, please."
+  - user: "Wait, sorry. This appointment is actually for my mother, Meera Iyer, date of birth 1958-07-21. Please book it for her instead, not me."
+  - user: "She needs a checkup with Dr. Mehta, the earliest available slot."
+  - user: "Yes, the earliest one."
+  - user: "Yes, please book it for her."
+expect:
+  final_state: BOOKED
+  patient_active_bookings: {p_001: 0, p_003: 1}
+  events_required: [patient.change]

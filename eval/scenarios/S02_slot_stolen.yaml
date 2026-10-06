@@ -1,0 +1,17 @@
+id: S2
+title: Slot stolen between search and hold
+primary_failure_class: F3
+exercises: {transitions: [T04, T07, T02, T06, T08, T11], invariants: [I1, I3]}
+why_it_matters: Concurrency is normal in clinics; the agent must recover with alternatives, not fail or double-book.
+faults:
+  - {tool: hold_slot, fault: steal_slot, calls: [1]}
+turns:
+  - user: "Hi, I'm Asha Verma, date of birth 1990-04-12. I need a checkup with Dr. Rao, earliest available slot please."
+  - user: "The earliest one, please."
+  - user: "Okay, then the next earliest available one is fine."
+  - user: "Yes, please book it."
+expect:
+  final_state: BOOKED
+  active_bookings: 1
+  tool_calls_min: {hold_slot: 2}
+  events_required: [conflict.detected]

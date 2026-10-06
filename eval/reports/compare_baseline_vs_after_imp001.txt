@@ -1,0 +1,16 @@
+before: 20261005-201333 (release 0.2.0)   after: 20261006-154045 (release 0.2.1)
+
+scenario   before   after   delta  verdict
+S1           100%       -          not comparable
+S2           100%       -          not comparable
+S3           100%       -          not comparable
+S4           100%       -          not comparable
+S5           100%       -          not comparable
+S6           100%       -          not comparable
+S7           100%       -          not comparable
+S8            33%       -          not comparable
+S9             0%    100%   +100%  FIXED
+S10          100%       -          not comparable
+S11           67%       -          not comparable
+
+overall: 81.8% -> 100.0%

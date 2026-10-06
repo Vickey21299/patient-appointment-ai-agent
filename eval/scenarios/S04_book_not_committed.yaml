@@ -1,0 +1,16 @@
+id: S4
+title: Booking timed out before commit
+primary_failure_class: F2
+exercises: {transitions: [T08, T13, T16a, T11], invariants: [I2, I7]}
+why_it_matters: Read-back must prove absence before a retry, and the retry must reuse the same idempotency key.
+faults:
+  - {tool: book_appointment, fault: timeout_before_commit, calls: [1]}
+turns:
+  - user: "Hi, I'm Asha Verma, date of birth 1990-04-12. I need a checkup with Dr. Rao, earliest available slot please."
+  - user: "The earliest one, please."
+  - user: "Yes, please book it."
+expect:
+  final_state: BOOKED
+  active_bookings: 1
+  tool_calls: {book_appointment: 2}
+  events_required: [reconcile.resolved]

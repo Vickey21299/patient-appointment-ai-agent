@@ -1,0 +1,15 @@
+id: S7
+title: Duplicate message and repeated booking request
+primary_failure_class: F7
+exercises: {transitions: [T11], invariants: [I1, I2]}
+why_it_matters: Redelivered messages and patients repeating themselves must never create a second booking.
+turns:
+  - user: "Hi, I'm Asha Verma, date of birth 1990-04-12. I need a checkup with Dr. Rao, earliest available slot please."
+  - user: "The earliest one, please."
+  - {user: "Yes, please book it.", request_id: "msg-3"}
+  - {user: "Yes, please book it.", request_id: "msg-3"}
+  - user: "Sorry, can you book that exact same slot with Dr. Rao for me again? I want to make sure it's booked."
+expect:
+  patient_active_bookings: {p_001: 1}
+  tool_calls: {book_appointment: 1}
+  events_required: [duplicate.detected]

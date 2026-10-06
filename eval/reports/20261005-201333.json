@@ -1,0 +1,3946 @@
+{
+  "meta": {
+    "eval_run_id": "20261005-201333",
+    "release": "0.2.0",
+    "model": "gemini-2.5-flash",
+    "runs_per_scenario": 3,
+    "duration_s": 384,
+    "created_at": "2026-10-05T20:19:58.641458+00:00"
+  },
+  "summary": {
+    "overall_pass_rate": 0.818,
+    "runs_total": 33,
+    "runs_errored": 0,
+    "scenarios": [
+      {
+        "scenario_id": "S1",
+        "title": "Happy path booking",
+        "failure_class": "none",
+        "runs": [
+          "pass",
+          "pass",
+          "pass"
+        ],
+        "pass_rate": 1.0,
+        "errors": 0,
+        "failed_checks": {}
+      },
+      {
+        "scenario_id": "S2",
+        "title": "Slot stolen between search and hold",
+        "failure_class": "F3",
+        "runs": [
+          "pass",
+          "pass",
+          "pass"
+        ],
+        "pass_rate": 1.0,
+        "errors": 0,
+        "failed_checks": {}
+      },
+      {
+        "scenario_id": "S3",
+        "title": "Booking committed but response lost",
+        "failure_class": "F2",
+        "runs": [
+          "pass",
+          "pass",
+          "pass"
+        ],
+        "pass_rate": 1.0,
+        "errors": 0,
+        "failed_checks": {}
+      },
+      {
+        "scenario_id": "S4",
+        "title": "Booking timed out before commit",
+        "failure_class": "F2",
+        "runs": [
+          "pass",
+          "pass",
+          "pass"
+        ],
+        "pass_rate": 1.0,
+        "errors": 0,
+        "failed_checks": {}
+      },
+      {
+        "scenario_id": "S5",
+        "title": "Transient availability failure recovers",
+        "failure_class": "F1",
+        "runs": [
+          "pass",
+          "pass",
+          "pass"
+        ],
+        "pass_rate": 1.0,
+        "errors": 0,
+        "failed_checks": {}
+      },
+      {
+        "scenario_id": "S6",
+        "title": "Booked, confirmation notice fails",
+        "failure_class": "F5",
+        "runs": [
+          "pass",
+          "pass",
+          "pass"
+        ],
+        "pass_rate": 1.0,
+        "errors": 0,
+        "failed_checks": {}
+      },
+      {
+        "scenario_id": "S7",
+        "title": "Duplicate message and repeated booking request",
+        "failure_class": "F7",
+        "runs": [
+          "pass",
+          "pass",
+          "pass"
+        ],
+        "pass_rate": 1.0,
+        "errors": 0,
+        "failed_checks": {}
+      },
+      {
+        "scenario_id": "S8",
+        "title": "Patient changes provider, then switches to another person",
+        "failure_class": "F8",
+        "runs": [
+          "pass",
+          "fail",
+          "fail"
+        ],
+        "pass_rate": 0.333,
+        "errors": 0,
+        "failed_checks": {
+          "expected-outcome/final-state": 2,
+          "expected-outcome/active-bookings-p_003": 2
+        }
+      },
+      {
+        "scenario_id": "S9",
+        "title": "Reschedule where cancelling the old booking fails",
+        "failure_class": "F5",
+        "runs": [
+          "fail",
+          "fail",
+          "fail"
+        ],
+        "pass_rate": 0.0,
+        "errors": 0,
+        "failed_checks": {
+          "expected-outcome/final-state": 3,
+          "expected-outcome/active-bookings": 3,
+          "expected-outcome/escalation-reason": 3,
+          "expected-outcome/final-reply-discloses": 3
+        }
+      },
+      {
+        "scenario_id": "S10",
+        "title": "Availability service outage",
+        "failure_class": "F10",
+        "runs": [
+          "pass",
+          "pass",
+          "pass"
+        ],
+        "pass_rate": 1.0,
+        "errors": 0,
+        "failed_checks": {}
+      },
+      {
+        "scenario_id": "S11",
+        "title": "Hold expires before the patient says yes",
+        "failure_class": "F8",
+        "runs": [
+          "pass",
+          "fail",
+          "pass"
+        ],
+        "pass_rate": 0.667,
+        "errors": 0,
+        "failed_checks": {
+          "expected-outcome/calls-hold_slot-min": 1
+        }
+      }
+    ]
+  },
+  "results": [
+    {
+      "scenario_id": "S1",
+      "run_index": 1,
+      "session_id": "eval-20261005-201333-S1-r1",
+      "status": "pass",
+      "checks": {
+        "expected-outcome": [
+          {
+            "name": "final-state",
+            "passed": true,
+            "detail": "got BOOKED, want BOOKED"
+          },
+          {
+            "name": "notice-status",
+            "passed": true,
+            "detail": "got SENT, want SENT"
+          },
+          {
+            "name": "active-bookings",
+            "passed": true,
+            "detail": "got 1, want 1"
+          },
+          {
+            "name": "calls-book_appointment",
+            "passed": true,
+            "detail": "got 1, want == 1"
+          }
+        ],
+        "invariants-hold": [
+          {
+            "name": "I1-no-double-booking",
+            "passed": true,
+            "detail": ""
+          },
+          {
+            "name": "I2-one-booking-per-key",
+            "passed": true,
+            "detail": ""
+          },
+          {
+            "name": "I4-intent-before-write",
+            "passed": true,
+            "detail": ""
+          },
+          {
+            "name": "I6-no-orphan-holds",
+            "passed": true,
+            "detail": ""
+          },
+          {
+            "name": "I12-escalation-has-packet",
+            "passed": true,
+            "detail": ""
+          }
+        ],
+        "truthful-claims": [
+          {
+            "name": "truthful-claims",
+            "passed": true,
+            "detail": ""
+          }
+        ],
+        "no-blind-write-retry": [
+          {
+            "name": "no-blind-write-retry",
+            "passed": true,
+            "detail": ""
+          }
+        ]
+      },
+      "turns": [
+        {
+          "user": "Hi, I'm Asha Verma, date of birth 1990-04-12. I need a checkup with Dr. Rao, earliest available slot please.",
+          "reply": "I have a few slots available with Dr. Rao on Wednesday, October 7th:\n\n*   9:00 AM\n*   9:30 AM\n*   10:00 AM\n\nWhich of these times works best for you?",
+          "state": "OFFERED",
+          "notice_status": "NOT_REQUIRED",
+          "active_bookings": 0,
+          "trace_id": "aa9efb61265b7a1ba54405585563203e",
+          "error": null
+        },
+        {
+          "user": "The earliest one, please.",
+          "reply": "You've selected a checkup with Dr. Rao on Wednesday, October 7th at 9:00 AM. Does that sound right?",
+          "state": "CONFIRMING",
+          "notice_status": "NOT_REQUIRED",
+          "active_bookings": 0,
+          "trace_id": "7bd5ad8a586c0b303f175b51247c9176",
+          "error": null
+        },
+        {
+          "user": "Yes, please book it.",
+          "reply": "Great! Your appointment with Dr. Rao for a checkup on Wednesday, October 7th at 9:00 AM is now booked. A confirmation message has been sent.",
+          "state": "BOOKED",
+          "notice_status": "SENT",
+          "active_bookings": 1,
+          "trace_id": "8ed4d0138732650fcbe1aa002bf7cecd",
+          "error": null
+        }
+      ],
+      "final_state": "BOOKED",
+      "duration_s": 19.9,
+      "error": null,
+      "trace_ids": [
+        "aa9efb61265b7a1ba54405585563203e",
+        "7bd5ad8a586c0b303f175b51247c9176",
+        "8ed4d0138732650fcbe1aa002bf7cecd"
+      ]
+    },
+    {
+      "scenario_id": "S1",
+      "run_index": 2,
+      "session_id": "eval-20261005-201333-S1-r2",
+      "status": "pass",
+      "checks": {
+        "expected-outcome": [
+          {
+            "name": "final-state",
+            "passed": true,
+            "detail": "got BOOKED, want BOOKED"
+          },
+          {
+            "name": "notice-status",
+            "passed": true,
+            "detail": "got SENT, want SENT"
+          },
+          {
+            "name": "active-bookings",
+            "passed": true,
+            "detail": "got 1, want 1"
+          },
+          {
+            "name": "calls-book_appointment",
+            "passed": true,
+            "detail": "got 1, want == 1"
+          }
+        ],
+        "invariants-hold": [
+          {
+            "name": "I1-no-double-booking",
+            "passed": true,
+            "detail": ""
+          },
+          {
+            "name": "I2-one-booking-per-key",
+            "passed": true,
+            "detail": ""
+          },
+          {
+            "name": "I4-intent-before-write",
+            "passed": true,
+            "detail": ""
+          },
+          {
+            "name": "I6-no-orphan-holds",
+            "passed": true,
+            "detail": ""
+          },
+          {
+            "name": "I12-escalation-has-packet",
+            "passed": true,
+            "detail": ""
+          }
+        ],
+        "truthful-claims": [
+          {
+            "name": "truthful-claims",
+            "passed": true,
+            "detail": ""
+          }
+        ],
+        "no-blind-write-retry": [
+          {
+            "name": "no-blind-write-retry",
+            "passed": true,
+            "detail": ""
+          }
+        ]
+      },
+      "turns": [
+        {
+          "user": "Hi, I'm Asha Verma, date of birth 1990-04-12. I need a checkup with Dr. Rao, earliest available slot please.",
+          "reply": "I have a few slots available for a checkup with Dr. Rao on Wednesday, October 7th:\n\n*   9:00 AM\n*   9:30 AM\n*   10:00 AM\n\nWhich of these times works best for you?",
+          "state": "OFFERED",
+          "notice_status": "NOT_REQUIRED",
+          "active_bookings": 0,
+          "trace_id": "cb0d5de3f514f3461554f052d007c3d6",
+          "error": null
+        },
+        {
+          "user": "The earliest one, please.",
+          "reply": "You've chosen the 9:00 AM slot on Wednesday, October 7th, with Dr. Rao. Would you like to confirm this appointment?",
+          "state": "CONFIRMING",
+          "notice_status": "NOT_REQUIRED",
+          "active_bookings": 0,
+          "trace_id": "a3e87d2c803c62f30c00227228d0a24d",
+          "error": null
+        },
+        {
+          "user": "Yes, please book it.",
+          "reply": "Great! Your appointment for a checkup with Dr. Rao on Wednesday, October 7th, at 9:00 AM has been booked. A confirmation message has been sent.",
+          "state": "BOOKED",
+          "notice_status": "SENT",
+          "active_bookings": 1,
+          "trace_id": "f10b9224ca08f217ea2c05b011a61f93",
+          "error": null
+        }
+      ],
+      "final_state": "BOOKED",
+      "duration_s": 19.9,
+      "error": null,
+      "trace_ids": [
+        "cb0d5de3f514f3461554f052d007c3d6",
+        "a3e87d2c803c62f30c00227228d0a24d",
+        "f10b9224ca08f217ea2c05b011a61f93"
+      ]
+    },
+    {
+      "scenario_id": "S1",
+      "run_index": 3,
+      "session_id": "eval-20261005-201333-S1-r3",
+      "status": "pass",
+      "checks": {
+        "expected-outcome": [
+          {
+            "name": "final-state",
+            "passed": true,
+            "detail": "got BOOKED, want BOOKED"
+          },
+          {
+            "name": "notice-status",
+            "passed": true,
+            "detail": "got SENT, want SENT"
+          },
+          {
+            "name": "active-bookings",
+            "passed": true,
+            "detail": "got 1, want 1"
+          },
+          {
+            "name": "calls-book_appointment",
+            "passed": true,
+            "detail": "got 1, want == 1"
+          }
+        ],
+        "invariants-hold": [
+          {
+            "name": "I1-no-double-booking",
+            "passed": true,
+            "detail": ""
+          },
+          {
+            "name": "I2-one-booking-per-key",
+            "passed": true,
+            "detail": ""
+          },
+          {
+            "name": "I4-intent-before-write",
+            "passed": true,
+            "detail": ""
+          },
+          {
+            "name": "I6-no-orphan-holds",
+            "passed": true,
+            "detail": ""
+          },
+          {
+            "name": "I12-escalation-has-packet",
+            "passed": true,
+            "detail": ""
+          }
+        ],
+        "truthful-claims": [
+          {
+            "name": "truthful-claims",
+            "passed": true,
+            "detail": ""
+          }
+        ],
+        "no-blind-write-retry": [
+          {
+            "name": "no-blind-write-retry",
+            "passed": true,
+            "detail": ""
+          }
+        ]
+      },
+      "turns": [
+        {
+          "user": "Hi, I'm Asha Verma, date of birth 1990-04-12. I need a checkup with Dr. Rao, earliest available slot please.",
+          "reply": "Okay, Asha, I have a few slots available with Dr. Rao on Wednesday, October 7th:\n\n*   9:00 AM\n*   9:30 AM\n*   10:00 AM\n\nWhich of these times works best for you?",
+          "state": "OFFERED",
+          "notice_status": "NOT_REQUIRED",
+          "active_bookings": 0,
+          "trace_id": "0a2878823ae29dc8ff60300d2b161e45",
+          "error": null
+        },
+        {
+          "user": "The earliest one, please.",
+          "reply": "You've selected a checkup with Dr. Rao on Wednesday, October 7th at 9:00 AM. Does that sound right?",
+          "state": "CONFIRMING",
+          "notice_status": "NOT_REQUIRED",
+          "active_bookings": 0,
+          "trace_id": "b13eb2e1ca968dc5ef04f8472261ec08",
+          "error": null
+        },
+        {
+          "user": "Yes, please book it.",
+          "reply": "Great! Your checkup with Dr. Rao on Wednesday, October 7th at 9:00 AM is now booked. A confirmation message has been sent.",
+          "state": "BOOKED",
+          "notice_status": "SENT",
+          "active_bookings": 1,
+          "trace_id": "9cdefb50fa85b9ff562015c4457621ca",
+          "error": null
+        }
+      ],
+      "final_state": "BOOKED",
+      "duration_s": 19.7,
+      "error": null,
+      "trace_ids": [
+        "0a2878823ae29dc8ff60300d2b161e45",
+        "b13eb2e1ca968dc5ef04f8472261ec08",
+        "9cdefb50fa85b9ff562015c4457621ca"
+      ]
+    },
+    {
+      "scenario_id": "S10",
+      "run_index": 1,
+      "session_id": "eval-20261005-201333-S10-r1",
+      "status": "pass",
+      "checks": {
+        "expected-outcome": [
+          {
+            "name": "final-state",
+            "passed": true,
+            "detail": "got ESCALATED, want ESCALATED"
+          },
+          {
+            "name": "active-bookings",
+            "passed": true,
+            "detail": "got 0, want 0"
+          },
+          {
+            "name": "calls-search_slots-max",
+            "passed": true,
+            "detail": "got 5, want <= 6"
+          },
+          {
+            "name": "event-circuit.open",
+            "passed": true,
+            "detail": ""
+          },
+          {
+            "name": "final-reply-discloses",
+            "passed": true,
+            "detail": ""
+          }
+        ],
+        "invariants-hold": [
+          {
+            "name": "I1-no-double-booking",
+            "passed": true,
+            "detail": ""
+          },
+          {
+            "name": "I2-one-booking-per-key",
+            "passed": true,
+            "detail": ""
+          },
+          {
+            "name": "I4-intent-before-write",
+            "passed": true,
+            "detail": ""
+          },
+          {
+            "name": "I6-no-orphan-holds",
+            "passed": true,
+            "detail": ""
+          },
+          {
+            "name": "I12-escalation-has-packet",
+            "passed": true,
+            "detail": ""
+          }
+        ],
+        "truthful-claims": [
+          {
+            "name": "truthful-claims",
+            "passed": true,
+            "detail": ""
+          }
+        ],
+        "no-blind-write-retry": [
+          {
+            "name": "no-blind-write-retry",
+            "passed": true,
+            "detail": ""
+          }
+        ]
+      },
+      "turns": [
+        {
+          "user": "Hi, I'm Asha Verma, date of birth 1990-04-12. I need a checkup with Dr. Rao, earliest available slot please.",
+          "reply": "I'm sorry, it seems like there was a temporary problem finding available slots with Dr. Rao. Would you like me to try searching again?",
+          "state": "SEARCHING",
+          "notice_status": "NOT_REQUIRED",
+          "active_bookings": 0,
+          "trace_id": "bbdaa01b58314ac0b732cf00c948795a",
+          "error": null
+        },
+        {
+          "user": "Could you please try again?",
+          "reply": "I apologize, but I'm still having trouble accessing the availability service. A staff member will follow up with you to help you book your appointment.",
+          "state": "ESCALATED",
+          "notice_status": "NOT_REQUIRED",
+          "active_bookings": 0,
+          "trace_id": "fbebeb9f673b413029428361dca9bad3",
+          "error": null
+        }
+      ],
+      "final_state": "ESCALATED",
+      "duration_s": 17.1,
+      "error": null,
+      "trace_ids": [
+        "bbdaa01b58314ac0b732cf00c948795a",
+        "fbebeb9f673b413029428361dca9bad3"
+      ]
+    },
+    {
+      "scenario_id": "S10",
+      "run_index": 2,
+      "session_id": "eval-20261005-201333-S10-r2",
+      "status": "pass",
+      "checks": {
+        "expected-outcome": [
+          {
+            "name": "final-state",
+            "passed": true,
+            "detail": "got ESCALATED, want ESCALATED"
+          },
+          {
+            "name": "active-bookings",
+            "passed": true,
+            "detail": "got 0, want 0"
+          },
+          {
+            "name": "calls-search_slots-max",
+            "passed": true,
+            "detail": "got 5, want <= 6"
+          },
+          {
+            "name": "event-circuit.open",
+            "passed": true,
+            "detail": ""
+          },
+          {
+            "name": "final-reply-discloses",
+            "passed": true,
+            "detail": ""
+          }
+        ],
+        "invariants-hold": [
+          {
+            "name": "I1-no-double-booking",
+            "passed": true,
+            "detail": ""
+          },
+          {
+            "name": "I2-one-booking-per-key",
+            "passed": true,
+            "detail": ""
+          },
+          {
+            "name": "I4-intent-before-write",
+            "passed": true,
+            "detail": ""
+          },
+          {
+            "name": "I6-no-orphan-holds",
+            "passed": true,
+            "detail": ""
+          },
+          {
+            "name": "I12-escalation-has-packet",
+            "passed": true,
+            "detail": ""
+          }
+        ],
+        "truthful-claims": [
+          {
+            "name": "truthful-claims",
+            "passed": true,
+            "detail": ""
+          }
+        ],
+        "no-blind-write-retry": [
+          {
+            "name": "no-blind-write-retry",
+            "passed": true,
+            "detail": ""
+          }
+        ]
+      },
+      "turns": [
+        {
+          "user": "Hi, I'm Asha Verma, date of birth 1990-04-12. I need a checkup with Dr. Rao, earliest available slot please.",
+          "reply": "I'm sorry, it seems there was a temporary problem finding available slots with Dr. Rao. Would you like me to try searching again?",
+          "state": "SEARCHING",
+          "notice_status": "NOT_REQUIRED",
+          "active_bookings": 0,
+          "trace_id": "fdca1963a6e47244f903fce8968152ec",
+          "error": null
+        },
+        {
+          "user": "Could you please try again?",
+          "reply": "I apologize, but I'm still unable to retrieve available slots at this moment. There seems to be a technical issue. A staff member will follow up with you to help you book your appointment.",
+          "state": "ESCALATED",
+          "notice_status": "NOT_REQUIRED",
+          "active_bookings": 0,
+          "trace_id": "7d1deea976cec6efd6fd277c68d93270",
+          "error": null
+        }
+      ],
+      "final_state": "ESCALATED",
+      "duration_s": 14.4,
+      "error": null,
+      "trace_ids": [
+        "fdca1963a6e47244f903fce8968152ec",
+        "7d1deea976cec6efd6fd277c68d93270"
+      ]
+    },
+    {
+      "scenario_id": "S10",
+      "run_index": 3,
+      "session_id": "eval-20261005-201333-S10-r3",
+      "status": "pass",
+      "checks": {
+        "expected-outcome": [
+          {
+            "name": "final-state",
+            "passed": true,
+            "detail": "got ESCALATED, want ESCALATED"
+          },
+          {
+            "name": "active-bookings",
+            "passed": true,
+            "detail": "got 0, want 0"
+          },
+          {
+            "name": "calls-search_slots-max",
+            "passed": true,
+            "detail": "got 5, want <= 6"
+          },
+          {
+            "name": "event-circuit.open",
+            "passed": true,
+            "detail": ""
+          },
+          {
+            "name": "final-reply-discloses",
+            "passed": true,
+            "detail": ""
+          }
+        ],
+        "invariants-hold": [
+          {
+            "name": "I1-no-double-booking",
+            "passed": true,
+            "detail": ""
+          },
+          {
+            "name": "I2-one-booking-per-key",
+            "passed": true,
+            "detail": ""
+          },
+          {
+            "name": "I4-intent-before-write",
+            "passed": true,
+            "detail": ""
+          },
+          {
+            "name": "I6-no-orphan-holds",
+            "passed": true,
+            "detail": ""
+          },
+          {
+            "name": "I12-escalation-has-packet",
+            "passed": true,
+            "detail": ""
+          }
+        ],
+        "truthful-claims": [
+          {
+            "name": "truthful-claims",
+            "passed": true,
+            "detail": ""
+          }
+        ],
+        "no-blind-write-retry": [
+          {
+            "name": "no-blind-write-retry",
+            "passed": true,
+            "detail": ""
+          }
+        ]
+      },
+      "turns": [
+        {
+          "user": "Hi, I'm Asha Verma, date of birth 1990-04-12. I need a checkup with Dr. Rao, earliest available slot please.",
+          "reply": "I'm sorry, it seems there was a temporary issue finding available slots right now. Would you like me to try searching again?",
+          "state": "SEARCHING",
+          "notice_status": "NOT_REQUIRED",
+          "active_bookings": 0,
+          "trace_id": "bfe511d0a60f0f22f45b7a5736b12ce9",
+          "error": null
+        },
+        {
+          "user": "Could you please try again?",
+          "reply": "I apologize, but it seems there's still an issue with the availability service. A staff member will follow up with you to help book your appointment.",
+          "state": "ESCALATED",
+          "notice_status": "NOT_REQUIRED",
+          "active_bookings": 0,
+          "trace_id": "91e78af952c52a82f7e65242895b33de",
+          "error": null
+        }
+      ],
+      "final_state": "ESCALATED",
+      "duration_s": 13.4,
+      "error": null,
+      "trace_ids": [
+        "bfe511d0a60f0f22f45b7a5736b12ce9",
+        "91e78af952c52a82f7e65242895b33de"
+      ]
+    },
+    {
+      "scenario_id": "S11",
+      "run_index": 1,
+      "session_id": "eval-20261005-201333-S11-r1",
+      "status": "pass",
+      "checks": {
+        "expected-outcome": [
+          {
+            "name": "final-state",
+            "passed": true,
+            "detail": "got BOOKED, want BOOKED"
+          },
+          {
+            "name": "active-bookings",
+            "passed": true,
+            "detail": "got 1, want 1"
+          },
+          {
+            "name": "calls-book_appointment",
+            "passed": true,
+            "detail": "got 1, want == 1"
+          },
+          {
+            "name": "calls-hold_slot-min",
+            "passed": true,
+            "detail": "got 2, want >= 2"
+          }
+        ],
+        "invariants-hold": [
+          {
+            "name": "I1-no-double-booking",
+            "passed": true,
+            "detail": ""
+          },
+          {
+            "name": "I2-one-booking-per-key",
+            "passed": true,
+            "detail": ""
+          },
+          {
+            "name": "I4-intent-before-write",
+            "passed": true,
+            "detail": ""
+          },
+          {
+            "name": "I6-no-orphan-holds",
+            "passed": true,
+            "detail": ""
+          },
+          {
+            "name": "I12-escalation-has-packet",
+            "passed": true,
+            "detail": ""
+          }
+        ],
+        "truthful-claims": [
+          {
+            "name": "truthful-claims",
+            "passed": true,
+            "detail": ""
+          }
+        ],
+        "no-blind-write-retry": [
+          {
+            "name": "no-blind-write-retry",
+            "passed": true,
+            "detail": ""
+          }
+        ]
+      },
+      "turns": [
+        {
+          "user": "Hi, I'm Asha Verma, date of birth 1990-04-12. I need a checkup with Dr. Rao, earliest available slot please.",
+          "reply": "Okay, Asha, I have a few slots available with Dr. Rao on Wednesday, October 7th:\n\n*   9:00 AM\n*   9:30 AM\n*   10:00 AM\n\nWhich of these times works best for you?",
+          "state": "OFFERED",
+          "notice_status": "NOT_REQUIRED",
+          "active_bookings": 0,
+          "trace_id": "be5859da4f2c7f6060a3ee094b52f819",
+          "error": null
+        },
+        {
+          "user": "The earliest one, please.",
+          "reply": "You've selected a checkup with Dr. Rao on Wednesday, October 7th at 9:00 AM. Does that sound right?",
+          "state": "CONFIRMING",
+          "notice_status": "NOT_REQUIRED",
+          "active_bookings": 0,
+          "trace_id": "f9396bff72b1f392459b63fd145cc461",
+          "error": null
+        },
+        {
+          "user": "Yes, please book it.",
+          "reply": "I apologize, it seems there was a slight issue with holding that slot. The appointment for a checkup with Dr. Rao on Wednesday, October 7th at 9:00 AM is still available. Would you like to confirm this booking?",
+          "state": "OFFERED",
+          "notice_status": "NOT_REQUIRED",
+          "active_bookings": 0,
+          "trace_id": "cbdd185e5a9c914e52f0292875d7a939",
+          "error": null
+        },
+        {
+          "user": "Yes, I confirm. Please book it.",
+          "reply": "Great! Your checkup with Dr. Rao on Wednesday, October 7th at 9:00 AM is now booked. A confirmation message has been sent.",
+          "state": "BOOKED",
+          "notice_status": "SENT",
+          "active_bookings": 1,
+          "trace_id": "76c67bcb9a9f28f108917166a3d00cd4",
+          "error": null
+        }
+      ],
+      "final_state": "BOOKED",
+      "duration_s": 33.0,
+      "error": null,
+      "trace_ids": [
+        "be5859da4f2c7f6060a3ee094b52f819",
+        "f9396bff72b1f392459b63fd145cc461",
+        "cbdd185e5a9c914e52f0292875d7a939",
+        "76c67bcb9a9f28f108917166a3d00cd4"
+      ]
+    },
+    {
+      "scenario_id": "S11",
+      "run_index": 2,
+      "session_id": "eval-20261005-201333-S11-r2",
+      "status": "fail",
+      "checks": {
+        "expected-outcome": [
+          {
+            "name": "final-state",
+            "passed": true,
+            "detail": "got BOOKED, want BOOKED"
+          },
+          {
+            "name": "active-bookings",
+            "passed": true,
+            "detail": "got 1, want 1"
+          },
+          {
+            "name": "calls-book_appointment",
+            "passed": true,
+            "detail": "got 1, want == 1"
+          },
+          {
+            "name": "calls-hold_slot-min",
+            "passed": false,
+            "detail": "got 1, want >= 2"
+          }
+        ],
+        "invariants-hold": [
+          {
+            "name": "I1-no-double-booking",
+            "passed": true,
+            "detail": ""
+          },
+          {
+            "name": "I2-one-booking-per-key",
+            "passed": true,
+            "detail": ""
+          },
+          {
+            "name": "I4-intent-before-write",
+            "passed": true,
+            "detail": ""
+          },
+          {
+            "name": "I6-no-orphan-holds",
+            "passed": true,
+            "detail": ""
+          },
+          {
+            "name": "I12-escalation-has-packet",
+            "passed": true,
+            "detail": ""
+          }
+        ],
+        "truthful-claims": [
+          {
+            "name": "truthful-claims",
+            "passed": true,
+            "detail": ""
+          }
+        ],
+        "no-blind-write-retry": [
+          {
+            "name": "no-blind-write-retry",
+            "passed": true,
+            "detail": ""
+          }
+        ]
+      },
+      "turns": [
+        {
+          "user": "Hi, I'm Asha Verma, date of birth 1990-04-12. I need a checkup with Dr. Rao, earliest available slot please.",
+          "reply": "I have found a few slots for a checkup with Dr. Rao on Wednesday, October 7th:\n\n*   9:00 AM\n*   9:30 AM\n*   10:00 AM\n\nWhich of these times works best for you?",
+          "state": "OFFERED",
+          "notice_status": "NOT_REQUIRED",
+          "active_bookings": 0,
+          "trace_id": "bdf4ca0d7e5e2ad0377dfaedf698b4b5",
+          "error": null
+        },
+        {
+          "user": "The earliest one, please.",
+          "reply": "I apologize, it seems there was an issue with selecting that slot. It looks like the system didn't recognize the exact time I tried to choose.\n\nLet me re-offer the available slots for a checkup with Dr. Rao on Wednesday, October 7th:\n\n*   9:00 AM\n*   9:30 AM\n*   10:00 AM\n\nWhich of these times works best for you?I apologize, it seems there was an issue with selecting that slot. It looks like the system didn't recognize the exact time I tried to choose.\n\nLet me re-offer the available slots for a checkup with Dr. Rao on Wednesday, October 7th:\n\n*   9:00 AM\n*   9:30 AM\n*   10:00 AM\n\nWhich of these times works best for you?",
+          "state": "OFFERED",
+          "notice_status": "NOT_REQUIRED",
+          "active_bookings": 0,
+          "trace_id": "9bcb58f60b00fc682c31460991975ea2",
+          "error": null
+        },
+        {
+          "user": "Yes, please book it.",
+          "reply": "You've selected a checkup with Dr. Rao on Wednesday, October 7th, at 9:00 AM. Would you like to confirm this appointment?",
+          "state": "CONFIRMING",
+          "notice_status": "NOT_REQUIRED",
+          "active_bookings": 0,
+          "trace_id": "5ae293d1ca674c9e12b3386f7c693c72",
+          "error": null
+        },
+        {
+          "user": "Yes, I confirm. Please book it.",
+          "reply": "Great! Your checkup with Dr. Rao on Wednesday, October 7th, at 9:00 AM is now booked. A confirmation message has been sent.",
+          "state": "BOOKED",
+          "notice_status": "SENT",
+          "active_bookings": 1,
+          "trace_id": "c05de306ec6669f6ff1cc579f36d907b",
+          "error": null
+        }
+      ],
+      "final_state": "BOOKED",
+      "duration_s": 22.9,
+      "error": null,
+      "trace_ids": [
+        "bdf4ca0d7e5e2ad0377dfaedf698b4b5",
+        "9bcb58f60b00fc682c31460991975ea2",
+        "5ae293d1ca674c9e12b3386f7c693c72",
+        "c05de306ec6669f6ff1cc579f36d907b"
+      ]
+    },
+    {
+      "scenario_id": "S11",
+      "run_index": 3,
+      "session_id": "eval-20261005-201333-S11-r3",
+      "status": "pass",
+      "checks": {
+        "expected-outcome": [
+          {
+            "name": "final-state",
+            "passed": true,
+            "detail": "got BOOKED, want BOOKED"
+          },
+          {
+            "name": "active-bookings",
+            "passed": true,
+            "detail": "got 1, want 1"
+          },
+          {
+            "name": "calls-book_appointment",
+            "passed": true,
+            "detail": "got 1, want == 1"
+          },
+          {
+            "name": "calls-hold_slot-min",
+            "passed": true,
+            "detail": "got 2, want >= 2"
+          }
+        ],
+        "invariants-hold": [
+          {
+            "name": "I1-no-double-booking",
+            "passed": true,
+            "detail": ""
+          },
+          {
+            "name": "I2-one-booking-per-key",
+            "passed": true,
+            "detail": ""
+          },
+          {
+            "name": "I4-intent-before-write",
+            "passed": true,
+            "detail": ""
+          },
+          {
+            "name": "I6-no-orphan-holds",
+            "passed": true,
+            "detail": ""
+          },
+          {
+            "name": "I12-escalation-has-packet",
+            "passed": true,
+            "detail": ""
+          }
+        ],
+        "truthful-claims": [
+          {
+            "name": "truthful-claims",
+            "passed": true,
+            "detail": ""
+          }
+        ],
+        "no-blind-write-retry": [
+          {
+            "name": "no-blind-write-retry",
+            "passed": true,
+            "detail": ""
+          }
+        ]
+      },
+      "turns": [
+        {
+          "user": "Hi, I'm Asha Verma, date of birth 1990-04-12. I need a checkup with Dr. Rao, earliest available slot please.",
+          "reply": "I have found a few slots for a checkup with Dr. Rao on Wednesday, October 7th:\n\n*   9:00 AM\n*   9:30 AM\n*   10:00 AM\n\nWhich of these times works best for you?",
+          "state": "OFFERED",
+          "notice_status": "NOT_REQUIRED",
+          "active_bookings": 0,
+          "trace_id": "7fd4d01deed07066f707e51bef7e6b79",
+          "error": null
+        },
+        {
+          "user": "The earliest one, please.",
+          "reply": "You've selected a checkup with Dr. Rao on Wednesday, October 7th at 9:00 AM. Would you like to confirm this appointment?",
+          "state": "CONFIRMING",
+          "notice_status": "NOT_REQUIRED",
+          "active_bookings": 0,
+          "trace_id": "e5d1137b0b31e44ca554a33957749dc8",
+          "error": null
+        },
+        {
+          "user": "Yes, please book it.",
+          "reply": "It looks like there was a slight issue. The slot for Dr. Rao on Wednesday, October 7th at 9:00 AM is still available. Would you like to confirm this appointment?",
+          "state": "OFFERED",
+          "notice_status": "NOT_REQUIRED",
+          "active_bookings": 0,
+          "trace_id": "7efb46d08fc20b3d49b1020a4d2fd941",
+          "error": null
+        },
+        {
+          "user": "Yes, I confirm. Please book it.",
+          "reply": "Great! Your checkup with Dr. Rao on Wednesday, October 7th at 9:00 AM is now booked. A confirmation message has been sent.",
+          "state": "BOOKED",
+          "notice_status": "SENT",
+          "active_bookings": 1,
+          "trace_id": "555e91cc9c34592d78aaeb3d83be096a",
+          "error": null
+        }
+      ],
+      "final_state": "BOOKED",
+      "duration_s": 30.5,
+      "error": null,
+      "trace_ids": [
+        "7fd4d01deed07066f707e51bef7e6b79",
+        "e5d1137b0b31e44ca554a33957749dc8",
+        "7efb46d08fc20b3d49b1020a4d2fd941",
+        "555e91cc9c34592d78aaeb3d83be096a"
+      ]
+    },
+    {
+      "scenario_id": "S2",
+      "run_index": 1,
+      "session_id": "eval-20261005-201333-S2-r1",
+      "status": "pass",
+      "checks": {
+        "expected-outcome": [
+          {
+            "name": "final-state",
+            "passed": true,
+            "detail": "got BOOKED, want BOOKED"
+          },
+          {
+            "name": "active-bookings",
+            "passed": true,
+            "detail": "got 1, want 1"
+          },
+          {
+            "name": "calls-hold_slot-min",
+            "passed": true,
+            "detail": "got 2, want >= 2"
+          },
+          {
+            "name": "event-conflict.detected",
+            "passed": true,
+            "detail": ""
+          }
+        ],
+        "invariants-hold": [
+          {
+            "name": "I1-no-double-booking",
+            "passed": true,
+            "detail": ""
+          },
+          {
+            "name": "I2-one-booking-per-key",
+            "passed": true,
+            "detail": ""
+          },
+          {
+            "name": "I4-intent-before-write",
+            "passed": true,
+            "detail": ""
+          },
+          {
+            "name": "I6-no-orphan-holds",
+            "passed": true,
+            "detail": ""
+          },
+          {
+            "name": "I12-escalation-has-packet",
+            "passed": true,
+            "detail": ""
+          }
+        ],
+        "truthful-claims": [
+          {
+            "name": "truthful-claims",
+            "passed": true,
+            "detail": ""
+          }
+        ],
+        "no-blind-write-retry": [
+          {
+            "name": "no-blind-write-retry",
+            "passed": true,
+            "detail": ""
+          }
+        ]
+      },
+      "turns": [
+        {
+          "user": "Hi, I'm Asha Verma, date of birth 1990-04-12. I need a checkup with Dr. Rao, earliest available slot please.",
+          "reply": "Okay, Asha, I have a few slots available with Dr. Rao on Wednesday, October 7th:\n\n*   9:00 AM\n*   9:30 AM\n*   10:00 AM\n\nWhich of these times works best for you?",
+          "state": "OFFERED",
+          "notice_status": "NOT_REQUIRED",
+          "active_bookings": 0,
+          "trace_id": "3256da33cba0a5fcb3abadbe4a92ba35",
+          "error": null
+        },
+        {
+          "user": "The earliest one, please.",
+          "reply": "I'm so sorry, Asha! That 9:00 AM slot with Dr. Rao was just taken.\n\nHowever, I still have these available for you on Wednesday, October 7th:\n\n*   9:30 AM\n*   10:00 AM\n*   10:30 AM\n\nWould any of those work?",
+          "state": "OFFERED",
+          "notice_status": "NOT_REQUIRED",
+          "active_bookings": 0,
+          "trace_id": "a03d3d9cf9b372956823d0f92a761c96",
+          "error": null
+        },
+        {
+          "user": "Okay, then the next earliest available one is fine.",
+          "reply": "Great! I've placed a hold on the 9:30 AM slot with Dr. Rao on Wednesday, October 7th.\n\nTo confirm, would you like to book this appointment?",
+          "state": "CONFIRMING",
+          "notice_status": "NOT_REQUIRED",
+          "active_bookings": 0,
+          "trace_id": "2228be0f11a8badc1ebf031bfafe6268",
+          "error": null
+        },
+        {
+          "user": "Yes, please book it.",
+          "reply": "Your appointment with Dr. Rao on Wednesday, October 7th at 9:30 AM has been successfully booked. A confirmation message has been sent.",
+          "state": "BOOKED",
+          "notice_status": "SENT",
+          "active_bookings": 1,
+          "trace_id": "5a5d5813df4fd5cda8ea5f1657285138",
+          "error": null
+        }
+      ],
+      "final_state": "BOOKED",
+      "duration_s": 25.1,
+      "error": null,
+      "trace_ids": [
+        "3256da33cba0a5fcb3abadbe4a92ba35",
+        "a03d3d9cf9b372956823d0f92a761c96",
+        "2228be0f11a8badc1ebf031bfafe6268",
+        "5a5d5813df4fd5cda8ea5f1657285138"
+      ]
+    },
+    {
+      "scenario_id": "S2",
+      "run_index": 2,
+      "session_id": "eval-20261005-201333-S2-r2",
+      "status": "pass",
+      "checks": {
+        "expected-outcome": [
+          {
+            "name": "final-state",
+            "passed": true,
+            "detail": "got BOOKED, want BOOKED"
+          },
+          {
+            "name": "active-bookings",
+            "passed": true,
+            "detail": "got 1, want 1"
+          },
+          {
+            "name": "calls-hold_slot-min",
+            "passed": true,
+            "detail": "got 2, want >= 2"
+          },
+          {
+            "name": "event-conflict.detected",
+            "passed": true,
+            "detail": ""
+          }
+        ],
+        "invariants-hold": [
+          {
+            "name": "I1-no-double-booking",
+            "passed": true,
+            "detail": ""
+          },
+          {
+            "name": "I2-one-booking-per-key",
+            "passed": true,
+            "detail": ""
+          },
+          {
+            "name": "I4-intent-before-write",
+            "passed": true,
+            "detail": ""
+          },
+          {
+            "name": "I6-no-orphan-holds",
+            "passed": true,
+            "detail": ""
+          },
+          {
+            "name": "I12-escalation-has-packet",
+            "passed": true,
+            "detail": ""
+          }
+        ],
+        "truthful-claims": [
+          {
+            "name": "truthful-claims",
+            "passed": true,
+            "detail": ""
+          }
+        ],
+        "no-blind-write-retry": [
+          {
+            "name": "no-blind-write-retry",
+            "passed": true,
+            "detail": ""
+          }
+        ]
+      },
+      "turns": [
+        {
+          "user": "Hi, I'm Asha Verma, date of birth 1990-04-12. I need a checkup with Dr. Rao, earliest available slot please.",
+          "reply": "Okay, Asha, I have a few slots available with Dr. Rao on Wednesday, October 7th:\n\n*   9:00 AM\n*   9:30 AM\n*   10:00 AM\n\nWhich of these times works best for you?",
+          "state": "OFFERED",
+          "notice_status": "NOT_REQUIRED",
+          "active_bookings": 0,
+          "trace_id": "1fed863bc69459c2a7ced7729b74d701",
+          "error": null
+        },
+        {
+          "user": "The earliest one, please.",
+          "reply": "I'm so sorry, Asha! It looks like the 9:00 AM slot was just taken.\n\nHowever, I still have these times available with Dr. Rao on Wednesday, October 7th:\n\n*   9:30 AM\n*   10:00 AM\n*   10:30 AM\n\nWould any of these work for you?",
+          "state": "OFFERED",
+          "notice_status": "NOT_REQUIRED",
+          "active_bookings": 0,
+          "trace_id": "0853bac24b90fe86c6c630068080b412",
+          "error": null
+        },
+        {
+          "user": "Okay, then the next earliest available one is fine.",
+          "reply": "Great! I've placed a hold on the 9:30 AM slot with Dr. Rao for you on Wednesday, October 7th.\n\nWould you like to confirm this appointment?",
+          "state": "CONFIRMING",
+          "notice_status": "NOT_REQUIRED",
+          "active_bookings": 0,
+          "trace_id": "40d9729bb4d514d5bf1b166d6ffd068c",
+          "error": null
+        },
+        {
+          "user": "Yes, please book it.",
+          "reply": "Wonderful! Your checkup with Dr. Rao on Wednesday, October 7th at 9:30 AM is now booked. A confirmation message has been sent.",
+          "state": "BOOKED",
+          "notice_status": "SENT",
+          "active_bookings": 1,
+          "trace_id": "36ad8810cd5ddc1d630b8acb96997c9c",
+          "error": null
+        }
+      ],
+      "final_state": "BOOKED",
+      "duration_s": 32.9,
+      "error": null,
+      "trace_ids": [
+        "1fed863bc69459c2a7ced7729b74d701",
+        "0853bac24b90fe86c6c630068080b412",
+        "40d9729bb4d514d5bf1b166d6ffd068c",
+        "36ad8810cd5ddc1d630b8acb96997c9c"
+      ]
+    },
+    {
+      "scenario_id": "S2",
+      "run_index": 3,
+      "session_id": "eval-20261005-201333-S2-r3",
+      "status": "pass",
+      "checks": {
+        "expected-outcome": [
+          {
+            "name": "final-state",
+            "passed": true,
+            "detail": "got BOOKED, want BOOKED"
+          },
+          {
+            "name": "active-bookings",
+            "passed": true,
+            "detail": "got 1, want 1"
+          },
+          {
+            "name": "calls-hold_slot-min",
+            "passed": true,
+            "detail": "got 2, want >= 2"
+          },
+          {
+            "name": "event-conflict.detected",
+            "passed": true,
+            "detail": ""
+          }
+        ],
+        "invariants-hold": [
+          {
+            "name": "I1-no-double-booking",
+            "passed": true,
+            "detail": ""
+          },
+          {
+            "name": "I2-one-booking-per-key",
+            "passed": true,
+            "detail": ""
+          },
+          {
+            "name": "I4-intent-before-write",
+            "passed": true,
+            "detail": ""
+          },
+          {
+            "name": "I6-no-orphan-holds",
+            "passed": true,
+            "detail": ""
+          },
+          {
+            "name": "I12-escalation-has-packet",
+            "passed": true,
+            "detail": ""
+          }
+        ],
+        "truthful-claims": [
+          {
+            "name": "truthful-claims",
+            "passed": true,
+            "detail": ""
+          }
+        ],
+        "no-blind-write-retry": [
+          {
+            "name": "no-blind-write-retry",
+            "passed": true,
+            "detail": ""
+          }
+        ]
+      },
+      "turns": [
+        {
+          "user": "Hi, I'm Asha Verma, date of birth 1990-04-12. I need a checkup with Dr. Rao, earliest available slot please.",
+          "reply": "I have a few slots available for a checkup with Dr. Rao on Wednesday, October 7th:\n\n*   9:00 AM\n*   9:30 AM\n*   10:00 AM\n\nWhich of these times works best for you?",
+          "state": "OFFERED",
+          "notice_status": "NOT_REQUIRED",
+          "active_bookings": 0,
+          "trace_id": "7dd8f3cb870a2d668269875614b7ab09",
+          "error": null
+        },
+        {
+          "user": "The earliest one, please.",
+          "reply": "I'm so sorry, but the 9:00 AM slot on Wednesday, October 7th, with Dr. Rao was just taken.\n\nHere are some other available times for a checkup with Dr. Rao on Wednesday, October 7th:\n\n*   9:30 AM\n*   10:00 AM\n*   10:30 AM\n\nWould any of these work for you?",
+          "state": "OFFERED",
+          "notice_status": "NOT_REQUIRED",
+          "active_bookings": 0,
+          "trace_id": "1aa609906498512fba466bd2b418635d",
+          "error": null
+        },
+        {
+          "user": "Okay, then the next earliest available one is fine.",
+          "reply": "Great! I have a hold on the 9:30 AM slot on Wednesday, October 7th, with Dr. Rao.\n\nWould you like to confirm this appointment?",
+          "state": "CONFIRMING",
+          "notice_status": "NOT_REQUIRED",
+          "active_bookings": 0,
+          "trace_id": "e588b73aca69436e529b9cd71b543571",
+          "error": null
+        },
+        {
+          "user": "Yes, please book it.",
+          "reply": "Your appointment for a checkup with Dr. Rao on Wednesday, October 7th, at 9:30 AM has been successfully booked. A confirmation message has been sent.",
+          "state": "BOOKED",
+          "notice_status": "SENT",
+          "active_bookings": 1,
+          "trace_id": "3aa3334116188075380c28262d03ebc8",
+          "error": null
+        }
+      ],
+      "final_state": "BOOKED",
+      "duration_s": 22.7,
+      "error": null,
+      "trace_ids": [
+        "7dd8f3cb870a2d668269875614b7ab09",
+        "1aa609906498512fba466bd2b418635d",
+        "e588b73aca69436e529b9cd71b543571",
+        "3aa3334116188075380c28262d03ebc8"
+      ]
+    },
+    {
+      "scenario_id": "S3",
+      "run_index": 1,
+      "session_id": "eval-20261005-201333-S3-r1",
+      "status": "pass",
+      "checks": {
+        "expected-outcome": [
+          {
+            "name": "final-state",
+            "passed": true,
+            "detail": "got BOOKED, want BOOKED"
+          },
+          {
+            "name": "active-bookings",
+            "passed": true,
+            "detail": "got 1, want 1"
+          },
+          {
+            "name": "calls-book_appointment",
+            "passed": true,
+            "detail": "got 1, want == 1"
+          },
+          {
+            "name": "event-reconcile.resolved",
+            "passed": true,
+            "detail": ""
+          }
+        ],
+        "invariants-hold": [
+          {
+            "name": "I1-no-double-booking",
+            "passed": true,
+            "detail": ""
+          },
+          {
+            "name": "I2-one-booking-per-key",
+            "passed": true,
+            "detail": ""
+          },
+          {
+            "name": "I4-intent-before-write",
+            "passed": true,
+            "detail": ""
+          },
+          {
+            "name": "I6-no-orphan-holds",
+            "passed": true,
+            "detail": ""
+          },
+          {
+            "name": "I12-escalation-has-packet",
+            "passed": true,
+            "detail": ""
+          }
+        ],
+        "truthful-claims": [
+          {
+            "name": "truthful-claims",
+            "passed": true,
+            "detail": ""
+          }
+        ],
+        "no-blind-write-retry": [
+          {
+            "name": "no-blind-write-retry",
+            "passed": true,
+            "detail": ""
+          }
+        ]
+      },
+      "turns": [
+        {
+          "user": "Hi, I'm Asha Verma, date of birth 1990-04-12. I need a checkup with Dr. Rao, earliest available slot please.",
+          "reply": "I have a few slots available for a checkup with Dr. Rao on Wednesday, October 7th:\n\n*   9:00 AM\n*   9:30 AM\n*   10:00 AM\n\nWhich of these times works best for you?",
+          "state": "OFFERED",
+          "notice_status": "NOT_REQUIRED",
+          "active_bookings": 0,
+          "trace_id": "34e10e39bf9259c6b5155a654ef7d683",
+          "error": null
+        },
+        {
+          "user": "The earliest one, please.",
+          "reply": "You've selected a checkup with Dr. Rao on Wednesday, October 7th at 9:00 AM. Does that sound right?",
+          "state": "CONFIRMING",
+          "notice_status": "NOT_REQUIRED",
+          "active_bookings": 0,
+          "trace_id": "6d8007bb68d9d3fde8a277e968db9f63",
+          "error": null
+        },
+        {
+          "user": "Yes, please book it.",
+          "reply": "Great! Your checkup with Dr. Rao on Wednesday, October 7th at 9:00 AM is now booked. A confirmation message has been sent.",
+          "state": "BOOKED",
+          "notice_status": "SENT",
+          "active_bookings": 1,
+          "trace_id": "ae1dd152ff498997fc7fdb05dc42e6b1",
+          "error": null
+        }
+      ],
+      "final_state": "BOOKED",
+      "duration_s": 21.3,
+      "error": null,
+      "trace_ids": [
+        "34e10e39bf9259c6b5155a654ef7d683",
+        "6d8007bb68d9d3fde8a277e968db9f63",
+        "ae1dd152ff498997fc7fdb05dc42e6b1"
+      ]
+    },
+    {
+      "scenario_id": "S3",
+      "run_index": 2,
+      "session_id": "eval-20261005-201333-S3-r2",
+      "status": "pass",
+      "checks": {
+        "expected-outcome": [
+          {
+            "name": "final-state",
+            "passed": true,
+            "detail": "got BOOKED, want BOOKED"
+          },
+          {
+            "name": "active-bookings",
+            "passed": true,
+            "detail": "got 1, want 1"
+          },
+          {
+            "name": "calls-book_appointment",
+            "passed": true,
+            "detail": "got 1, want == 1"
+          },
+          {
+            "name": "event-reconcile.resolved",
+            "passed": true,
+            "detail": ""
+          }
+        ],
+        "invariants-hold": [
+          {
+            "name": "I1-no-double-booking",
+            "passed": true,
+            "detail": ""
+          },
+          {
+            "name": "I2-one-booking-per-key",
+            "passed": true,
+            "detail": ""
+          },
+          {
+            "name": "I4-intent-before-write",
+            "passed": true,
+            "detail": ""
+          },
+          {
+            "name": "I6-no-orphan-holds",
+            "passed": true,
+            "detail": ""
+          },
+          {
+            "name": "I12-escalation-has-packet",
+            "passed": true,
+            "detail": ""
+          }
+        ],
+        "truthful-claims": [
+          {
+            "name": "truthful-claims",
+            "passed": true,
+            "detail": ""
+          }
+        ],
+        "no-blind-write-retry": [
+          {
+            "name": "no-blind-write-retry",
+            "passed": true,
+            "detail": ""
+          }
+        ]
+      },
+      "turns": [
+        {
+          "user": "Hi, I'm Asha Verma, date of birth 1990-04-12. I need a checkup with Dr. Rao, earliest available slot please.",
+          "reply": "I have a few slots available for a checkup with Dr. Rao on Wednesday, October 7th:\n\n*   9:00 AM\n*   9:30 AM\n*   10:00 AM\n\nWhich of these times works best for you?",
+          "state": "OFFERED",
+          "notice_status": "NOT_REQUIRED",
+          "active_bookings": 0,
+          "trace_id": "8935ce0ff13ee354ecbfe3e145f6ac15",
+          "error": null
+        },
+        {
+          "user": "The earliest one, please.",
+          "reply": "You've chosen the 9:00 AM slot on Wednesday, October 7th, with Dr. Rao. Would you like to confirm this appointment?",
+          "state": "CONFIRMING",
+          "notice_status": "NOT_REQUIRED",
+          "active_bookings": 0,
+          "trace_id": "759adeb30b31116ac8fe8f292d39e95d",
+          "error": null
+        },
+        {
+          "user": "Yes, please book it.",
+          "reply": "Great! Your appointment for a checkup with Dr. Rao on Wednesday, October 7th, at 9:00 AM has been booked. A confirmation message has been sent.",
+          "state": "BOOKED",
+          "notice_status": "SENT",
+          "active_bookings": 1,
+          "trace_id": "52f9396beaa969ae94dd89d4e26ab907",
+          "error": null
+        }
+      ],
+      "final_state": "BOOKED",
+      "duration_s": 18.8,
+      "error": null,
+      "trace_ids": [
+        "8935ce0ff13ee354ecbfe3e145f6ac15",
+        "759adeb30b31116ac8fe8f292d39e95d",
+        "52f9396beaa969ae94dd89d4e26ab907"
+      ]
+    },
+    {
+      "scenario_id": "S3",
+      "run_index": 3,
+      "session_id": "eval-20261005-201333-S3-r3",
+      "status": "pass",
+      "checks": {
+        "expected-outcome": [
+          {
+            "name": "final-state",
+            "passed": true,
+            "detail": "got BOOKED, want BOOKED"
+          },
+          {
+            "name": "active-bookings",
+            "passed": true,
+            "detail": "got 1, want 1"
+          },
+          {
+            "name": "calls-book_appointment",
+            "passed": true,
+            "detail": "got 1, want == 1"
+          },
+          {
+            "name": "event-reconcile.resolved",
+            "passed": true,
+            "detail": ""
+          }
+        ],
+        "invariants-hold": [
+          {
+            "name": "I1-no-double-booking",
+            "passed": true,
+            "detail": ""
+          },
+          {
+            "name": "I2-one-booking-per-key",
+            "passed": true,
+            "detail": ""
+          },
+          {
+            "name": "I4-intent-before-write",
+            "passed": true,
+            "detail": ""
+          },
+          {
+            "name": "I6-no-orphan-holds",
+            "passed": true,
+            "detail": ""
+          },
+          {
+            "name": "I12-escalation-has-packet",
+            "passed": true,
+            "detail": ""
+          }
+        ],
+        "truthful-claims": [
+          {
+            "name": "truthful-claims",
+            "passed": true,
+            "detail": ""
+          }
+        ],
+        "no-blind-write-retry": [
+          {
+            "name": "no-blind-write-retry",
+            "passed": true,
+            "detail": ""
+          }
+        ]
+      },
+      "turns": [
+        {
+          "user": "Hi, I'm Asha Verma, date of birth 1990-04-12. I need a checkup with Dr. Rao, earliest available slot please.",
+          "reply": "Okay, Asha, I have a few slots available with Dr. Rao on Wednesday, October 7th:\n\n*   9:00 AM\n*   9:30 AM\n*   10:00 AM\n\nWhich of these times works best for you?",
+          "state": "OFFERED",
+          "notice_status": "NOT_REQUIRED",
+          "active_bookings": 0,
+          "trace_id": "3dd5778ffcf071729fa00d444c8761d4",
+          "error": null
+        },
+        {
+          "user": "The earliest one, please.",
+          "reply": "You've selected a checkup with Dr. Rao on Wednesday, October 7th at 9:00 AM. Does that sound right?",
+          "state": "CONFIRMING",
+          "notice_status": "NOT_REQUIRED",
+          "active_bookings": 0,
+          "trace_id": "0ff696be9aaf35fcbeee61d9886cce01",
+          "error": null
+        },
+        {
+          "user": "Yes, please book it.",
+          "reply": "Great! Your checkup with Dr. Rao on Wednesday, October 7th at 9:00 AM is now booked. A confirmation message has been sent.",
+          "state": "BOOKED",
+          "notice_status": "SENT",
+          "active_bookings": 1,
+          "trace_id": "9b868d7b4c89b9806a0b88a6938770fb",
+          "error": null
+        }
+      ],
+      "final_state": "BOOKED",
+      "duration_s": 20.5,
+      "error": null,
+      "trace_ids": [
+        "3dd5778ffcf071729fa00d444c8761d4",
+        "0ff696be9aaf35fcbeee61d9886cce01",
+        "9b868d7b4c89b9806a0b88a6938770fb"
+      ]
+    },
+    {
+      "scenario_id": "S4",
+      "run_index": 1,
+      "session_id": "eval-20261005-201333-S4-r1",
+      "status": "pass",
+      "checks": {
+        "expected-outcome": [
+          {
+            "name": "final-state",
+            "passed": true,
+            "detail": "got BOOKED, want BOOKED"
+          },
+          {
+            "name": "active-bookings",
+            "passed": true,
+            "detail": "got 1, want 1"
+          },
+          {
+            "name": "calls-book_appointment",
+            "passed": true,
+            "detail": "got 2, want == 2"
+          },
+          {
+            "name": "event-reconcile.resolved",
+            "passed": true,
+            "detail": ""
+          }
+        ],
+        "invariants-hold": [
+          {
+            "name": "I1-no-double-booking",
+            "passed": true,
+            "detail": ""
+          },
+          {
+            "name": "I2-one-booking-per-key",
+            "passed": true,
+            "detail": ""
+          },
+          {
+            "name": "I4-intent-before-write",
+            "passed": true,
+            "detail": ""
+          },
+          {
+            "name": "I6-no-orphan-holds",
+            "passed": true,
+            "detail": ""
+          },
+          {
+            "name": "I12-escalation-has-packet",
+            "passed": true,
+            "detail": ""
+          }
+        ],
+        "truthful-claims": [
+          {
+            "name": "truthful-claims",
+            "passed": true,
+            "detail": ""
+          }
+        ],
+        "no-blind-write-retry": [
+          {
+            "name": "no-blind-write-retry",
+            "passed": true,
+            "detail": ""
+          }
+        ]
+      },
+      "turns": [
+        {
+          "user": "Hi, I'm Asha Verma, date of birth 1990-04-12. I need a checkup with Dr. Rao, earliest available slot please.",
+          "reply": "I have a few slots available for a checkup with Dr. Rao on Wednesday, October 7th:\n\n*   9:00 AM\n*   9:30 AM\n*   10:00 AM\n\nWhich of these times works best for you?",
+          "state": "OFFERED",
+          "notice_status": "NOT_REQUIRED",
+          "active_bookings": 0,
+          "trace_id": "f74a437d0064ebddbe5fb7fe8c9958cc",
+          "error": null
+        },
+        {
+          "user": "The earliest one, please.",
+          "reply": "You've selected a checkup with Dr. Rao on Wednesday, October 7th at 9:00 AM. Does that sound right?",
+          "state": "CONFIRMING",
+          "notice_status": "NOT_REQUIRED",
+          "active_bookings": 0,
+          "trace_id": "2338351c4d7a66277409a9f967c494dd",
+          "error": null
+        },
+        {
+          "user": "Yes, please book it.",
+          "reply": "Great! Your checkup with Dr. Rao on Wednesday, October 7th at 9:00 AM is now booked. A confirmation message has been sent.",
+          "state": "BOOKED",
+          "notice_status": "SENT",
+          "active_bookings": 1,
+          "trace_id": "e25fe86dbdca53c7ba2966d218ddaa20",
+          "error": null
+        }
+      ],
+      "final_state": "BOOKED",
+      "duration_s": 19.4,
+      "error": null,
+      "trace_ids": [
+        "f74a437d0064ebddbe5fb7fe8c9958cc",
+        "2338351c4d7a66277409a9f967c494dd",
+        "e25fe86dbdca53c7ba2966d218ddaa20"
+      ]
+    },
+    {
+      "scenario_id": "S4",
+      "run_index": 2,
+      "session_id": "eval-20261005-201333-S4-r2",
+      "status": "pass",
+      "checks": {
+        "expected-outcome": [
+          {
+            "name": "final-state",
+            "passed": true,
+            "detail": "got BOOKED, want BOOKED"
+          },
+          {
+            "name": "active-bookings",
+            "passed": true,
+            "detail": "got 1, want 1"
+          },
+          {
+            "name": "calls-book_appointment",
+            "passed": true,
+            "detail": "got 2, want == 2"
+          },
+          {
+            "name": "event-reconcile.resolved",
+            "passed": true,
+            "detail": ""
+          }
+        ],
+        "invariants-hold": [
+          {
+            "name": "I1-no-double-booking",
+            "passed": true,
+            "detail": ""
+          },
+          {
+            "name": "I2-one-booking-per-key",
+            "passed": true,
+            "detail": ""
+          },
+          {
+            "name": "I4-intent-before-write",
+            "passed": true,
+            "detail": ""
+          },
+          {
+            "name": "I6-no-orphan-holds",
+            "passed": true,
+            "detail": ""
+          },
+          {
+            "name": "I12-escalation-has-packet",
+            "passed": true,
+            "detail": ""
+          }
+        ],
+        "truthful-claims": [
+          {
+            "name": "truthful-claims",
+            "passed": true,
+            "detail": ""
+          }
+        ],
+        "no-blind-write-retry": [
+          {
+            "name": "no-blind-write-retry",
+            "passed": true,
+            "detail": ""
+          }
+        ]
+      },
+      "turns": [
+        {
+          "user": "Hi, I'm Asha Verma, date of birth 1990-04-12. I need a checkup with Dr. Rao, earliest available slot please.",
+          "reply": "I have a few slots available with Dr. Rao on Wednesday, October 7th:\n\n*   9:00 AM\n*   9:30 AM\n*   10:00 AM\n\nWhich of these times works best for you?",
+          "state": "OFFERED",
+          "notice_status": "NOT_REQUIRED",
+          "active_bookings": 0,
+          "trace_id": "0a9064e804f85af5b1573170f33cce8f",
+          "error": null
+        },
+        {
+          "user": "The earliest one, please.",
+          "reply": "You've selected a checkup with Dr. Rao on Wednesday, October 7th at 9:00 AM. Does that sound right?",
+          "state": "CONFIRMING",
+          "notice_status": "NOT_REQUIRED",
+          "active_bookings": 0,
+          "trace_id": "30fa88d8fe0d2a8d4f24d52130d3a3c1",
+          "error": null
+        },
+        {
+          "user": "Yes, please book it.",
+          "reply": "Great! Your appointment with Dr. Rao for a checkup on Wednesday, October 7th at 9:00 AM is booked. A confirmation message has been sent.",
+          "state": "BOOKED",
+          "notice_status": "SENT",
+          "active_bookings": 1,
+          "trace_id": "72a4f0febbcc85528fc5647f085ae675",
+          "error": null
+        }
+      ],
+      "final_state": "BOOKED",
+      "duration_s": 19.5,
+      "error": null,
+      "trace_ids": [
+        "0a9064e804f85af5b1573170f33cce8f",
+        "30fa88d8fe0d2a8d4f24d52130d3a3c1",
+        "72a4f0febbcc85528fc5647f085ae675"
+      ]
+    },
+    {
+      "scenario_id": "S4",
+      "run_index": 3,
+      "session_id": "eval-20261005-201333-S4-r3",
+      "status": "pass",
+      "checks": {
+        "expected-outcome": [
+          {
+            "name": "final-state",
+            "passed": true,
+            "detail": "got BOOKED, want BOOKED"
+          },
+          {
+            "name": "active-bookings",
+            "passed": true,
+            "detail": "got 1, want 1"
+          },
+          {
+            "name": "calls-book_appointment",
+            "passed": true,
+            "detail": "got 2, want == 2"
+          },
+          {
+            "name": "event-reconcile.resolved",
+            "passed": true,
+            "detail": ""
+          }
+        ],
+        "invariants-hold": [
+          {
+            "name": "I1-no-double-booking",
+            "passed": true,
+            "detail": ""
+          },
+          {
+            "name": "I2-one-booking-per-key",
+            "passed": true,
+            "detail": ""
+          },
+          {
+            "name": "I4-intent-before-write",
+            "passed": true,
+            "detail": ""
+          },
+          {
+            "name": "I6-no-orphan-holds",
+            "passed": true,
+            "detail": ""
+          },
+          {
+            "name": "I12-escalation-has-packet",
+            "passed": true,
+            "detail": ""
+          }
+        ],
+        "truthful-claims": [
+          {
+            "name": "truthful-claims",
+            "passed": true,
+            "detail": ""
+          }
+        ],
+        "no-blind-write-retry": [
+          {
+            "name": "no-blind-write-retry",
+            "passed": true,
+            "detail": ""
+          }
+        ]
+      },
+      "turns": [
+        {
+          "user": "Hi, I'm Asha Verma, date of birth 1990-04-12. I need a checkup with Dr. Rao, earliest available slot please.",
+          "reply": "I have a few slots available for a checkup with Dr. Rao on Wednesday, October 7th:\n\n*   9:00 AM\n*   9:30 AM\n*   10:00 AM\n\nWhich of these times works best for you?",
+          "state": "OFFERED",
+          "notice_status": "NOT_REQUIRED",
+          "active_bookings": 0,
+          "trace_id": "f5e2f4460f6dd9a2ef9be9afd7590fd3",
+          "error": null
+        },
+        {
+          "user": "The earliest one, please.",
+          "reply": "You've selected a checkup with Dr. Rao on Wednesday, October 7th at 9:00 AM. Would you like to confirm this appointment?",
+          "state": "CONFIRMING",
+          "notice_status": "NOT_REQUIRED",
+          "active_bookings": 0,
+          "trace_id": "d5e281b7598c6163cb49b384a057d20e",
+          "error": null
+        },
+        {
+          "user": "Yes, please book it.",
+          "reply": "Great! Your checkup with Dr. Rao on Wednesday, October 7th at 9:00 AM is booked. A confirmation message has been sent.",
+          "state": "BOOKED",
+          "notice_status": "SENT",
+          "active_bookings": 1,
+          "trace_id": "8d0f3e815788ecdb9b567ba13ddbf320",
+          "error": null
+        }
+      ],
+      "final_state": "BOOKED",
+      "duration_s": 19.6,
+      "error": null,
+      "trace_ids": [
+        "f5e2f4460f6dd9a2ef9be9afd7590fd3",
+        "d5e281b7598c6163cb49b384a057d20e",
+        "8d0f3e815788ecdb9b567ba13ddbf320"
+      ]
+    },
+    {
+      "scenario_id": "S5",
+      "run_index": 1,
+      "session_id": "eval-20261005-201333-S5-r1",
+      "status": "pass",
+      "checks": {
+        "expected-outcome": [
+          {
+            "name": "final-state",
+            "passed": true,
+            "detail": "got BOOKED, want BOOKED"
+          },
+          {
+            "name": "active-bookings",
+            "passed": true,
+            "detail": "got 1, want 1"
+          },
+          {
+            "name": "calls-search_slots-max",
+            "passed": true,
+            "detail": "got 3, want <= 6"
+          },
+          {
+            "name": "event-retry.scheduled",
+            "passed": true,
+            "detail": ""
+          }
+        ],
+        "invariants-hold": [
+          {
+            "name": "I1-no-double-booking",
+            "passed": true,
+            "detail": ""
+          },
+          {
+            "name": "I2-one-booking-per-key",
+            "passed": true,
+            "detail": ""
+          },
+          {
+            "name": "I4-intent-before-write",
+            "passed": true,
+            "detail": ""
+          },
+          {
+            "name": "I6-no-orphan-holds",
+            "passed": true,
+            "detail": ""
+          },
+          {
+            "name": "I12-escalation-has-packet",
+            "passed": true,
+            "detail": ""
+          }
+        ],
+        "truthful-claims": [
+          {
+            "name": "truthful-claims",
+            "passed": true,
+            "detail": ""
+          }
+        ],
+        "no-blind-write-retry": [
+          {
+            "name": "no-blind-write-retry",
+            "passed": true,
+            "detail": ""
+          }
+        ]
+      },
+      "turns": [
+        {
+          "user": "Hi, I'm Asha Verma, date of birth 1990-04-12. I need a checkup with Dr. Rao, earliest available slot please.",
+          "reply": "I have a few slots available for a checkup with Dr. Rao on Wednesday, October 7th:\n\n*   9:00 AM\n*   9:30 AM\n*   10:00 AM\n\nWhich of these times works best for you?",
+          "state": "OFFERED",
+          "notice_status": "NOT_REQUIRED",
+          "active_bookings": 0,
+          "trace_id": "e2640aa5bef31e90287e4e99f896ecdd",
+          "error": null
+        },
+        {
+          "user": "The earliest one, please.",
+          "reply": "You've selected a checkup with Dr. Rao on Wednesday, October 7th at 9:00 AM. Would you like to confirm this appointment?",
+          "state": "CONFIRMING",
+          "notice_status": "NOT_REQUIRED",
+          "active_bookings": 0,
+          "trace_id": "193a141513539410c197efc7ae55e406",
+          "error": null
+        },
+        {
+          "user": "Yes, please book it.",
+          "reply": "Great! Your checkup with Dr. Rao on Wednesday, October 7th at 9:00 AM is now booked. A confirmation message has been sent.",
+          "state": "BOOKED",
+          "notice_status": "SENT",
+          "active_bookings": 1,
+          "trace_id": "2a2fc27365ac8d8914a0c43be6f254a3",
+          "error": null
+        }
+      ],
+      "final_state": "BOOKED",
+      "duration_s": 20.1,
+      "error": null,
+      "trace_ids": [
+        "e2640aa5bef31e90287e4e99f896ecdd",
+        "193a141513539410c197efc7ae55e406",
+        "2a2fc27365ac8d8914a0c43be6f254a3"
+      ]
+    },
+    {
+      "scenario_id": "S5",
+      "run_index": 2,
+      "session_id": "eval-20261005-201333-S5-r2",
+      "status": "pass",
+      "checks": {
+        "expected-outcome": [
+          {
+            "name": "final-state",
+            "passed": true,
+            "detail": "got BOOKED, want BOOKED"
+          },
+          {
+            "name": "active-bookings",
+            "passed": true,
+            "detail": "got 1, want 1"
+          },
+          {
+            "name": "calls-search_slots-max",
+            "passed": true,
+            "detail": "got 3, want <= 6"
+          },
+          {
+            "name": "event-retry.scheduled",
+            "passed": true,
+            "detail": ""
+          }
+        ],
+        "invariants-hold": [
+          {
+            "name": "I1-no-double-booking",
+            "passed": true,
+            "detail": ""
+          },
+          {
+            "name": "I2-one-booking-per-key",
+            "passed": true,
+            "detail": ""
+          },
+          {
+            "name": "I4-intent-before-write",
+            "passed": true,
+            "detail": ""
+          },
+          {
+            "name": "I6-no-orphan-holds",
+            "passed": true,
+            "detail": ""
+          },
+          {
+            "name": "I12-escalation-has-packet",
+            "passed": true,
+            "detail": ""
+          }
+        ],
+        "truthful-claims": [
+          {
+            "name": "truthful-claims",
+            "passed": true,
+            "detail": ""
+          }
+        ],
+        "no-blind-write-retry": [
+          {
+            "name": "no-blind-write-retry",
+            "passed": true,
+            "detail": ""
+          }
+        ]
+      },
+      "turns": [
+        {
+          "user": "Hi, I'm Asha Verma, date of birth 1990-04-12. I need a checkup with Dr. Rao, earliest available slot please.",
+          "reply": "I have a few slots available for a checkup with Dr. Rao on Wednesday, October 7th:\n\n*   9:00 AM\n*   9:30 AM\n*   10:00 AM\n\nWhich of these times works best for you?",
+          "state": "OFFERED",
+          "notice_status": "NOT_REQUIRED",
+          "active_bookings": 0,
+          "trace_id": "9e4d32d697f37492542a250fdfe15b71",
+          "error": null
+        },
+        {
+          "user": "The earliest one, please.",
+          "reply": "You've chosen the 9:00 AM slot on Wednesday, October 7th, with Dr. Rao. Would you like to confirm this appointment?",
+          "state": "CONFIRMING",
+          "notice_status": "NOT_REQUIRED",
+          "active_bookings": 0,
+          "trace_id": "dea1dd6a677869420e5997713d57cc93",
+          "error": null
+        },
+        {
+          "user": "Yes, please book it.",
+          "reply": "Great! Your checkup with Dr. Rao on Wednesday, October 7th, at 9:00 AM has been booked. A confirmation message has been sent.",
+          "state": "BOOKED",
+          "notice_status": "SENT",
+          "active_bookings": 1,
+          "trace_id": "4b1d53a8ca6697a5623e6dda86962354",
+          "error": null
+        }
+      ],
+      "final_state": "BOOKED",
+      "duration_s": 17.7,
+      "error": null,
+      "trace_ids": [
+        "9e4d32d697f37492542a250fdfe15b71",
+        "dea1dd6a677869420e5997713d57cc93",
+        "4b1d53a8ca6697a5623e6dda86962354"
+      ]
+    },
+    {
+      "scenario_id": "S5",
+      "run_index": 3,
+      "session_id": "eval-20261005-201333-S5-r3",
+      "status": "pass",
+      "checks": {
+        "expected-outcome": [
+          {
+            "name": "final-state",
+            "passed": true,
+            "detail": "got BOOKED, want BOOKED"
+          },
+          {
+            "name": "active-bookings",
+            "passed": true,
+            "detail": "got 1, want 1"
+          },
+          {
+            "name": "calls-search_slots-max",
+            "passed": true,
+            "detail": "got 3, want <= 6"
+          },
+          {
+            "name": "event-retry.scheduled",
+            "passed": true,
+            "detail": ""
+          }
+        ],
+        "invariants-hold": [
+          {
+            "name": "I1-no-double-booking",
+            "passed": true,
+            "detail": ""
+          },
+          {
+            "name": "I2-one-booking-per-key",
+            "passed": true,
+            "detail": ""
+          },
+          {
+            "name": "I4-intent-before-write",
+            "passed": true,
+            "detail": ""
+          },
+          {
+            "name": "I6-no-orphan-holds",
+            "passed": true,
+            "detail": ""
+          },
+          {
+            "name": "I12-escalation-has-packet",
+            "passed": true,
+            "detail": ""
+          }
+        ],
+        "truthful-claims": [
+          {
+            "name": "truthful-claims",
+            "passed": true,
+            "detail": ""
+          }
+        ],
+        "no-blind-write-retry": [
+          {
+            "name": "no-blind-write-retry",
+            "passed": true,
+            "detail": ""
+          }
+        ]
+      },
+      "turns": [
+        {
+          "user": "Hi, I'm Asha Verma, date of birth 1990-04-12. I need a checkup with Dr. Rao, earliest available slot please.",
+          "reply": "I have a few slots available for a checkup with Dr. Rao on Wednesday, October 7th:\n\n*   9:00 AM\n*   9:30 AM\n*   10:00 AM\n\nWhich of these times works best for you?",
+          "state": "OFFERED",
+          "notice_status": "NOT_REQUIRED",
+          "active_bookings": 0,
+          "trace_id": "c249b847f1ab7d199521dfbfd6e434bf",
+          "error": null
+        },
+        {
+          "user": "The earliest one, please.",
+          "reply": "You've chosen the 9:00 AM slot on Wednesday, October 7th, with Dr. Rao. Would you like to confirm this appointment?",
+          "state": "CONFIRMING",
+          "notice_status": "NOT_REQUIRED",
+          "active_bookings": 0,
+          "trace_id": "c431c13eab23b0040bd5424b9a47cf48",
+          "error": null
+        },
+        {
+          "user": "Yes, please book it.",
+          "reply": "Great! Your checkup with Dr. Rao on Wednesday, October 7th, at 9:00 AM has been booked. A confirmation message has been sent.",
+          "state": "BOOKED",
+          "notice_status": "SENT",
+          "active_bookings": 1,
+          "trace_id": "323b4753b75a511965b34eca5801449d",
+          "error": null
+        }
+      ],
+      "final_state": "BOOKED",
+      "duration_s": 18.3,
+      "error": null,
+      "trace_ids": [
+        "c249b847f1ab7d199521dfbfd6e434bf",
+        "c431c13eab23b0040bd5424b9a47cf48",
+        "323b4753b75a511965b34eca5801449d"
+      ]
+    },
+    {
+      "scenario_id": "S6",
+      "run_index": 1,
+      "session_id": "eval-20261005-201333-S6-r1",
+      "status": "pass",
+      "checks": {
+        "expected-outcome": [
+          {
+            "name": "final-state",
+            "passed": true,
+            "detail": "got BOOKED, want BOOKED"
+          },
+          {
+            "name": "notice-status",
+            "passed": true,
+            "detail": "got FAILED_RETRYING, want FAILED_RETRYING"
+          },
+          {
+            "name": "active-bookings",
+            "passed": true,
+            "detail": "got 1, want 1"
+          },
+          {
+            "name": "final-reply-discloses",
+            "passed": true,
+            "detail": ""
+          }
+        ],
+        "invariants-hold": [
+          {
+            "name": "I1-no-double-booking",
+            "passed": true,
+            "detail": ""
+          },
+          {
+            "name": "I2-one-booking-per-key",
+            "passed": true,
+            "detail": ""
+          },
+          {
+            "name": "I4-intent-before-write",
+            "passed": true,
+            "detail": ""
+          },
+          {
+            "name": "I6-no-orphan-holds",
+            "passed": true,
+            "detail": ""
+          },
+          {
+            "name": "I12-escalation-has-packet",
+            "passed": true,
+            "detail": ""
+          }
+        ],
+        "truthful-claims": [
+          {
+            "name": "truthful-claims",
+            "passed": true,
+            "detail": ""
+          }
+        ],
+        "no-blind-write-retry": [
+          {
+            "name": "no-blind-write-retry",
+            "passed": true,
+            "detail": ""
+          }
+        ]
+      },
+      "turns": [
+        {
+          "user": "Hi, I'm Asha Verma, date of birth 1990-04-12. I need a checkup with Dr. Rao, earliest available slot please.",
+          "reply": "I have a few slots available for a checkup with Dr. Rao on Wednesday, October 7th:\n\n*   9:00 AM\n*   9:30 AM\n*   10:00 AM\n\nWhich of these times works best for you?",
+          "state": "OFFERED",
+          "notice_status": "NOT_REQUIRED",
+          "active_bookings": 0,
+          "trace_id": "c4915031866f052f0534fadf9a2ce4ed",
+          "error": null
+        },
+        {
+          "user": "The earliest one, please.",
+          "reply": "You've chosen the 9:00 AM slot on Wednesday, October 7th, with Dr. Rao. Would you like to confirm this appointment?",
+          "state": "CONFIRMING",
+          "notice_status": "NOT_REQUIRED",
+          "active_bookings": 0,
+          "trace_id": "4a9a035bdfd3002b79bf92dc8284b472",
+          "error": null
+        },
+        {
+          "user": "Yes, please book it.",
+          "reply": "Your appointment with Dr. Rao for a checkup on Wednesday, October 7th, at 9:00 AM has been booked. A confirmation message is delayed, but we will send it as soon as possible.",
+          "state": "BOOKED",
+          "notice_status": "FAILED_RETRYING",
+          "active_bookings": 1,
+          "trace_id": "c9f292a9cd3505f3069483df0a3299ce",
+          "error": null
+        }
+      ],
+      "final_state": "BOOKED",
+      "duration_s": 18.2,
+      "error": null,
+      "trace_ids": [
+        "c4915031866f052f0534fadf9a2ce4ed",
+        "4a9a035bdfd3002b79bf92dc8284b472",
+        "c9f292a9cd3505f3069483df0a3299ce"
+      ]
+    },
+    {
+      "scenario_id": "S6",
+      "run_index": 2,
+      "session_id": "eval-20261005-201333-S6-r2",
+      "status": "pass",
+      "checks": {
+        "expected-outcome": [
+          {
+            "name": "final-state",
+            "passed": true,
+            "detail": "got BOOKED, want BOOKED"
+          },
+          {
+            "name": "notice-status",
+            "passed": true,
+            "detail": "got FAILED_RETRYING, want FAILED_RETRYING"
+          },
+          {
+            "name": "active-bookings",
+            "passed": true,
+            "detail": "got 1, want 1"
+          },
+          {
+            "name": "final-reply-discloses",
+            "passed": true,
+            "detail": ""
+          }
+        ],
+        "invariants-hold": [
+          {
+            "name": "I1-no-double-booking",
+            "passed": true,
+            "detail": ""
+          },
+          {
+            "name": "I2-one-booking-per-key",
+            "passed": true,
+            "detail": ""
+          },
+          {
+            "name": "I4-intent-before-write",
+            "passed": true,
+            "detail": ""
+          },
+          {
+            "name": "I6-no-orphan-holds",
+            "passed": true,
+            "detail": ""
+          },
+          {
+            "name": "I12-escalation-has-packet",
+            "passed": true,
+            "detail": ""
+          }
+        ],
+        "truthful-claims": [
+          {
+            "name": "truthful-claims",
+            "passed": true,
+            "detail": ""
+          }
+        ],
+        "no-blind-write-retry": [
+          {
+            "name": "no-blind-write-retry",
+            "passed": true,
+            "detail": ""
+          }
+        ]
+      },
+      "turns": [
+        {
+          "user": "Hi, I'm Asha Verma, date of birth 1990-04-12. I need a checkup with Dr. Rao, earliest available slot please.",
+          "reply": "I have a few slots available for a checkup with Dr. Rao on Wednesday, October 7th:\n\n*   9:00 AM\n*   9:30 AM\n*   10:00 AM\n\nWhich of these times works best for you?",
+          "state": "OFFERED",
+          "notice_status": "NOT_REQUIRED",
+          "active_bookings": 0,
+          "trace_id": "f55a8de56734b7d987ec026fc6afb73c",
+          "error": null
+        },
+        {
+          "user": "The earliest one, please.",
+          "reply": "You've chosen the 9:00 AM slot on Wednesday, October 7th, with Dr. Rao. Would you like to confirm this appointment?",
+          "state": "CONFIRMING",
+          "notice_status": "NOT_REQUIRED",
+          "active_bookings": 0,
+          "trace_id": "8bd53cbf79656d8900950c373b1386ca",
+          "error": null
+        },
+        {
+          "user": "Yes, please book it.",
+          "reply": "Your appointment for a checkup with Dr. Rao on Wednesday, October 7th, at 9:00 AM has been booked. A confirmation message is delayed, but we will send it as soon as possible.",
+          "state": "BOOKED",
+          "notice_status": "FAILED_RETRYING",
+          "active_bookings": 1,
+          "trace_id": "155aef87eb43a6051be2de7ec004e8f0",
+          "error": null
+        }
+      ],
+      "final_state": "BOOKED",
+      "duration_s": 17.7,
+      "error": null,
+      "trace_ids": [
+        "f55a8de56734b7d987ec026fc6afb73c",
+        "8bd53cbf79656d8900950c373b1386ca",
+        "155aef87eb43a6051be2de7ec004e8f0"
+      ]
+    },
+    {
+      "scenario_id": "S6",
+      "run_index": 3,
+      "session_id": "eval-20261005-201333-S6-r3",
+      "status": "pass",
+      "checks": {
+        "expected-outcome": [
+          {
+            "name": "final-state",
+            "passed": true,
+            "detail": "got BOOKED, want BOOKED"
+          },
+          {
+            "name": "notice-status",
+            "passed": true,
+            "detail": "got FAILED_RETRYING, want FAILED_RETRYING"
+          },
+          {
+            "name": "active-bookings",
+            "passed": true,
+            "detail": "got 1, want 1"
+          },
+          {
+            "name": "final-reply-discloses",
+            "passed": true,
+            "detail": ""
+          }
+        ],
+        "invariants-hold": [
+          {
+            "name": "I1-no-double-booking",
+            "passed": true,
+            "detail": ""
+          },
+          {
+            "name": "I2-one-booking-per-key",
+            "passed": true,
+            "detail": ""
+          },
+          {
+            "name": "I4-intent-before-write",
+            "passed": true,
+            "detail": ""
+          },
+          {
+            "name": "I6-no-orphan-holds",
+            "passed": true,
+            "detail": ""
+          },
+          {
+            "name": "I12-escalation-has-packet",
+            "passed": true,
+            "detail": ""
+          }
+        ],
+        "truthful-claims": [
+          {
+            "name": "truthful-claims",
+            "passed": true,
+            "detail": ""
+          }
+        ],
+        "no-blind-write-retry": [
+          {
+            "name": "no-blind-write-retry",
+            "passed": true,
+            "detail": ""
+          }
+        ]
+      },
+      "turns": [
+        {
+          "user": "Hi, I'm Asha Verma, date of birth 1990-04-12. I need a checkup with Dr. Rao, earliest available slot please.",
+          "reply": "I have a few slots available with Dr. Rao on Wednesday, October 7th:\n\n*   9:00 AM\n*   9:30 AM\n*   10:00 AM\n\nWhich of these times works best for you?",
+          "state": "OFFERED",
+          "notice_status": "NOT_REQUIRED",
+          "active_bookings": 0,
+          "trace_id": "2323c998583ade7bf9391eacc41f53f5",
+          "error": null
+        },
+        {
+          "user": "The earliest one, please.",
+          "reply": "You've selected a checkup with Dr. Rao on Wednesday, October 7th at 9:00 AM. Does that sound right?",
+          "state": "CONFIRMING",
+          "notice_status": "NOT_REQUIRED",
+          "active_bookings": 0,
+          "trace_id": "49c24a6cda16ce697a4a8189e3bda349",
+          "error": null
+        },
+        {
+          "user": "Yes, please book it.",
+          "reply": "Your appointment with Dr. Rao on Wednesday, October 7th at 9:00 AM is booked. A confirmation message is delayed, but we will send it as soon as possible.",
+          "state": "BOOKED",
+          "notice_status": "FAILED_RETRYING",
+          "active_bookings": 1,
+          "trace_id": "507c1139b1de451abbf36adedead8214",
+          "error": null
+        }
+      ],
+      "final_state": "BOOKED",
+      "duration_s": 19.7,
+      "error": null,
+      "trace_ids": [
+        "2323c998583ade7bf9391eacc41f53f5",
+        "49c24a6cda16ce697a4a8189e3bda349",
+        "507c1139b1de451abbf36adedead8214"
+      ]
+    },
+    {
+      "scenario_id": "S7",
+      "run_index": 1,
+      "session_id": "eval-20261005-201333-S7-r1",
+      "status": "pass",
+      "checks": {
+        "expected-outcome": [
+          {
+            "name": "active-bookings-p_001",
+            "passed": true,
+            "detail": "got 1, want 1"
+          },
+          {
+            "name": "calls-book_appointment",
+            "passed": true,
+            "detail": "got 1, want == 1"
+          },
+          {
+            "name": "event-duplicate.detected",
+            "passed": true,
+            "detail": ""
+          }
+        ],
+        "invariants-hold": [
+          {
+            "name": "I1-no-double-booking",
+            "passed": true,
+            "detail": ""
+          },
+          {
+            "name": "I2-one-booking-per-key",
+            "passed": true,
+            "detail": ""
+          },
+          {
+            "name": "I4-intent-before-write",
+            "passed": true,
+            "detail": ""
+          },
+          {
+            "name": "I6-no-orphan-holds",
+            "passed": true,
+            "detail": ""
+          },
+          {
+            "name": "I12-escalation-has-packet",
+            "passed": true,
+            "detail": ""
+          }
+        ],
+        "truthful-claims": [
+          {
+            "name": "truthful-claims",
+            "passed": true,
+            "detail": ""
+          }
+        ],
+        "no-blind-write-retry": [
+          {
+            "name": "no-blind-write-retry",
+            "passed": true,
+            "detail": ""
+          }
+        ]
+      },
+      "turns": [
+        {
+          "user": "Hi, I'm Asha Verma, date of birth 1990-04-12. I need a checkup with Dr. Rao, earliest available slot please.",
+          "reply": "I have a few slots available for a checkup with Dr. Rao on Wednesday, October 7th:\n\n*   9:00 AM\n*   9:30 AM\n*   10:00 AM\n\nWhich of these times works best for you?",
+          "state": "OFFERED",
+          "notice_status": "NOT_REQUIRED",
+          "active_bookings": 0,
+          "trace_id": "9fbc5644f1a82b753f55bb71b85b8a00",
+          "error": null
+        },
+        {
+          "user": "The earliest one, please.",
+          "reply": "You've chosen the 9:00 AM slot on Wednesday, October 7th, with Dr. Rao. Would you like to confirm this appointment?",
+          "state": "CONFIRMING",
+          "notice_status": "NOT_REQUIRED",
+          "active_bookings": 0,
+          "trace_id": "525bbf154b6cee6bbadc33ca60277077",
+          "error": null
+        },
+        {
+          "user": "Yes, please book it.",
+          "reply": "Great! Your appointment for a checkup with Dr. Rao on Wednesday, October 7th, at 9:00 AM has been booked. A confirmation message has been sent.",
+          "state": "BOOKED",
+          "notice_status": "SENT",
+          "active_bookings": 1,
+          "trace_id": "5ca63f8686030bf632d3a369ae1a0cb6",
+          "error": null
+        },
+        {
+          "user": "Yes, please book it.",
+          "reply": "Great! Your appointment for a checkup with Dr. Rao on Wednesday, October 7th, at 9:00 AM has been booked. A confirmation message has been sent.",
+          "state": "BOOKED",
+          "notice_status": "SENT",
+          "active_bookings": 1,
+          "trace_id": "5ca63f8686030bf632d3a369ae1a0cb6",
+          "error": null
+        },
+        {
+          "user": "Sorry, can you book that exact same slot with Dr. Rao for me again? I want to make sure it's booked.",
+          "reply": "Your appointment with Dr. Rao on Wednesday, October 7th, at 9:00 AM is already booked. You received a confirmation message for it. Is there anything else I can help you with?",
+          "state": "BOOKED",
+          "notice_status": "SENT",
+          "active_bookings": 1,
+          "trace_id": "1992e5981b94e394a88cc29d2bfbc3b3",
+          "error": null
+        }
+      ],
+      "final_state": "BOOKED",
+      "duration_s": 22.8,
+      "error": null,
+      "trace_ids": [
+        "9fbc5644f1a82b753f55bb71b85b8a00",
+        "525bbf154b6cee6bbadc33ca60277077",
+        "5ca63f8686030bf632d3a369ae1a0cb6",
+        "5ca63f8686030bf632d3a369ae1a0cb6",
+        "1992e5981b94e394a88cc29d2bfbc3b3"
+      ]
+    },
+    {
+      "scenario_id": "S7",
+      "run_index": 2,
+      "session_id": "eval-20261005-201333-S7-r2",
+      "status": "pass",
+      "checks": {
+        "expected-outcome": [
+          {
+            "name": "active-bookings-p_001",
+            "passed": true,
+            "detail": "got 1, want 1"
+          },
+          {
+            "name": "calls-book_appointment",
+            "passed": true,
+            "detail": "got 1, want == 1"
+          },
+          {
+            "name": "event-duplicate.detected",
+            "passed": true,
+            "detail": ""
+          }
+        ],
+        "invariants-hold": [
+          {
+            "name": "I1-no-double-booking",
+            "passed": true,
+            "detail": ""
+          },
+          {
+            "name": "I2-one-booking-per-key",
+            "passed": true,
+            "detail": ""
+          },
+          {
+            "name": "I4-intent-before-write",
+            "passed": true,
+            "detail": ""
+          },
+          {
+            "name": "I6-no-orphan-holds",
+            "passed": true,
+            "detail": ""
+          },
+          {
+            "name": "I12-escalation-has-packet",
+            "passed": true,
+            "detail": ""
+          }
+        ],
+        "truthful-claims": [
+          {
+            "name": "truthful-claims",
+            "passed": true,
+            "detail": ""
+          }
+        ],
+        "no-blind-write-retry": [
+          {
+            "name": "no-blind-write-retry",
+            "passed": true,
+            "detail": ""
+          }
+        ]
+      },
+      "turns": [
+        {
+          "user": "Hi, I'm Asha Verma, date of birth 1990-04-12. I need a checkup with Dr. Rao, earliest available slot please.",
+          "reply": "I have a few slots available with Dr. Rao on Wednesday, October 7th:\n\n*   9:00 AM\n*   9:30 AM\n*   10:00 AM\n\nWhich of these times works best for you?",
+          "state": "OFFERED",
+          "notice_status": "NOT_REQUIRED",
+          "active_bookings": 0,
+          "trace_id": "a58f2de4538a2fef54fd476f6f691bb8",
+          "error": null
+        },
+        {
+          "user": "The earliest one, please.",
+          "reply": "You've selected a checkup with Dr. Rao on Wednesday, October 7th at 9:00 AM. Does that sound right?",
+          "state": "CONFIRMING",
+          "notice_status": "NOT_REQUIRED",
+          "active_bookings": 0,
+          "trace_id": "389369d13ae29ce2bbd070a629c24489",
+          "error": null
+        },
+        {
+          "user": "Yes, please book it.",
+          "reply": "Great! Your appointment with Dr. Rao for a checkup on Wednesday, October 7th at 9:00 AM is booked. A confirmation message has been sent.",
+          "state": "BOOKED",
+          "notice_status": "SENT",
+          "active_bookings": 1,
+          "trace_id": "f3a86daf02f38a89a18ad3e05e63235d",
+          "error": null
+        },
+        {
+          "user": "Yes, please book it.",
+          "reply": "Great! Your appointment with Dr. Rao for a checkup on Wednesday, October 7th at 9:00 AM is booked. A confirmation message has been sent.",
+          "state": "BOOKED",
+          "notice_status": "SENT",
+          "active_bookings": 1,
+          "trace_id": "f3a86daf02f38a89a18ad3e05e63235d",
+          "error": null
+        },
+        {
+          "user": "Sorry, can you book that exact same slot with Dr. Rao for me again? I want to make sure it's booked.",
+          "reply": "Your appointment with Dr. Rao on Wednesday, October 7th at 9:00 AM is already booked and confirmed. You should have received a confirmation message. There's no need to book it again.",
+          "state": "BOOKED",
+          "notice_status": "SENT",
+          "active_bookings": 1,
+          "trace_id": "981d3eaa76e17adc28e8fbe83547c143",
+          "error": null
+        }
+      ],
+      "final_state": "BOOKED",
+      "duration_s": 23.9,
+      "error": null,
+      "trace_ids": [
+        "a58f2de4538a2fef54fd476f6f691bb8",
+        "389369d13ae29ce2bbd070a629c24489",
+        "f3a86daf02f38a89a18ad3e05e63235d",
+        "f3a86daf02f38a89a18ad3e05e63235d",
+        "981d3eaa76e17adc28e8fbe83547c143"
+      ]
+    },
+    {
+      "scenario_id": "S7",
+      "run_index": 3,
+      "session_id": "eval-20261005-201333-S7-r3",
+      "status": "pass",
+      "checks": {
+        "expected-outcome": [
+          {
+            "name": "active-bookings-p_001",
+            "passed": true,
+            "detail": "got 1, want 1"
+          },
+          {
+            "name": "calls-book_appointment",
+            "passed": true,
+            "detail": "got 1, want == 1"
+          },
+          {
+            "name": "event-duplicate.detected",
+            "passed": true,
+            "detail": ""
+          }
+        ],
+        "invariants-hold": [
+          {
+            "name": "I1-no-double-booking",
+            "passed": true,
+            "detail": ""
+          },
+          {
+            "name": "I2-one-booking-per-key",
+            "passed": true,
+            "detail": ""
+          },
+          {
+            "name": "I4-intent-before-write",
+            "passed": true,
+            "detail": ""
+          },
+          {
+            "name": "I6-no-orphan-holds",
+            "passed": true,
+            "detail": ""
+          },
+          {
+            "name": "I12-escalation-has-packet",
+            "passed": true,
+            "detail": ""
+          }
+        ],
+        "truthful-claims": [
+          {
+            "name": "truthful-claims",
+            "passed": true,
+            "detail": ""
+          }
+        ],
+        "no-blind-write-retry": [
+          {
+            "name": "no-blind-write-retry",
+            "passed": true,
+            "detail": ""
+          }
+        ]
+      },
+      "turns": [
+        {
+          "user": "Hi, I'm Asha Verma, date of birth 1990-04-12. I need a checkup with Dr. Rao, earliest available slot please.",
+          "reply": "The earliest available slot with Dr. Rao is on Wednesday, October 7th, at 9:00 AM. Would you like to book this appointment?",
+          "state": "OFFERED",
+          "notice_status": "NOT_REQUIRED",
+          "active_bookings": 0,
+          "trace_id": "36475fdd0e9d330e7fc61db45cf5d092",
+          "error": null
+        },
+        {
+          "user": "The earliest one, please.",
+          "reply": "You've selected a checkup with Dr. Rao on Wednesday, October 7th, at 9:00 AM. Please confirm with a yes or no if you would like to book this appointment.",
+          "state": "CONFIRMING",
+          "notice_status": "NOT_REQUIRED",
+          "active_bookings": 0,
+          "trace_id": "5ad3fd0855ce209f75632602bcc3f634",
+          "error": null
+        },
+        {
+          "user": "Yes, please book it.",
+          "reply": "Great! Your checkup with Dr. Rao on Wednesday, October 7th, at 9:00 AM is now booked. A confirmation message has been sent.",
+          "state": "BOOKED",
+          "notice_status": "SENT",
+          "active_bookings": 1,
+          "trace_id": "1d38283c4a2015830c6c363f389c0959",
+          "error": null
+        },
+        {
+          "user": "Yes, please book it.",
+          "reply": "Great! Your checkup with Dr. Rao on Wednesday, October 7th, at 9:00 AM is now booked. A confirmation message has been sent.",
+          "state": "BOOKED",
+          "notice_status": "SENT",
+          "active_bookings": 1,
+          "trace_id": "1d38283c4a2015830c6c363f389c0959",
+          "error": null
+        },
+        {
+          "user": "Sorry, can you book that exact same slot with Dr. Rao for me again? I want to make sure it's booked.",
+          "reply": "Your appointment with Dr. Rao on Wednesday, October 7th, at 9:00 AM is already booked. Is there something else I can help you with?",
+          "state": "BOOKED",
+          "notice_status": "SENT",
+          "active_bookings": 1,
+          "trace_id": "9274112b9383afae4d7e8222272d451c",
+          "error": null
+        }
+      ],
+      "final_state": "BOOKED",
+      "duration_s": 21.9,
+      "error": null,
+      "trace_ids": [
+        "36475fdd0e9d330e7fc61db45cf5d092",
+        "5ad3fd0855ce209f75632602bcc3f634",
+        "1d38283c4a2015830c6c363f389c0959",
+        "1d38283c4a2015830c6c363f389c0959",
+        "9274112b9383afae4d7e8222272d451c"
+      ]
+    },
+    {
+      "scenario_id": "S8",
+      "run_index": 1,
+      "session_id": "eval-20261005-201333-S8-r1",
+      "status": "pass",
+      "checks": {
+        "expected-outcome": [
+          {
+            "name": "final-state",
+            "passed": true,
+            "detail": "got BOOKED, want BOOKED"
+          },
+          {
+            "name": "active-bookings-p_001",
+            "passed": true,
+            "detail": "got 0, want 0"
+          },
+          {
+            "name": "active-bookings-p_003",
+            "passed": true,
+            "detail": "got 1, want 1"
+          },
+          {
+            "name": "event-patient.change",
+            "passed": true,
+            "detail": ""
+          }
+        ],
+        "invariants-hold": [
+          {
+            "name": "I1-no-double-booking",
+            "passed": true,
+            "detail": ""
+          },
+          {
+            "name": "I2-one-booking-per-key",
+            "passed": true,
+            "detail": ""
+          },
+          {
+            "name": "I4-intent-before-write",
+            "passed": true,
+            "detail": ""
+          },
+          {
+            "name": "I6-no-orphan-holds",
+            "passed": true,
+            "detail": ""
+          },
+          {
+            "name": "I12-escalation-has-packet",
+            "passed": true,
+            "detail": ""
+          }
+        ],
+        "truthful-claims": [
+          {
+            "name": "truthful-claims",
+            "passed": true,
+            "detail": ""
+          }
+        ],
+        "no-blind-write-retry": [
+          {
+            "name": "no-blind-write-retry",
+            "passed": true,
+            "detail": ""
+          }
+        ]
+      },
+      "turns": [
+        {
+          "user": "Hi, I'm Asha Verma, date of birth 1990-04-12. I need a checkup with Dr. Rao, earliest available slot please.",
+          "reply": "I have a few slots available with Dr. Rao on Wednesday, October 7th:\n\n*   9:00 AM\n*   9:30 AM\n*   10:00 AM\n\nWhich of these times works best for you?",
+          "state": "OFFERED",
+          "notice_status": "NOT_REQUIRED",
+          "active_bookings": 0,
+          "trace_id": "1f346ef442309da65e1857ef9559e9bf",
+          "error": null
+        },
+        {
+          "user": "Actually, could I see Dr. Mehta instead? Earliest slot please.",
+          "reply": "Okay, I have some slots available with Dr. Mehta on Wednesday, October 7th:\n\n*   9:00 AM\n*   9:30 AM\n*   10:00 AM\n\nWhich of these times would you prefer?",
+          "state": "OFFERED",
+          "notice_status": "NOT_REQUIRED",
+          "active_bookings": 0,
+          "trace_id": "e1dc3dddbff3622284cc737c4cf0e5c3",
+          "error": null
+        },
+        {
+          "user": "The earliest one, please.",
+          "reply": "You've selected a checkup with Dr. Mehta on Wednesday, October 7th at 9:00 AM. Would you like to confirm this appointment?",
+          "state": "CONFIRMING",
+          "notice_status": "NOT_REQUIRED",
+          "active_bookings": 0,
+          "trace_id": "98fff060dad7c207467e60cb03cb63a8",
+          "error": null
+        },
+        {
+          "user": "Wait, sorry. This appointment is actually for my mother, Meera Iyer, date of birth 1958-07-21. Please book it for her instead, not me.",
+          "reply": "Thank you. I have switched the patient to Meera Iyer, born 1958-07-21.\n\nNow that we've verified Meera, what kind of visit does she need, and are there any preferences for a provider or date?",
+          "state": "COLLECTING",
+          "notice_status": "NOT_REQUIRED",
+          "active_bookings": 0,
+          "trace_id": "ba5fe390889da8fb23ce1b3bb94fd324",
+          "error": null
+        },
+        {
+          "user": "She needs a checkup with Dr. Mehta, the earliest available slot.",
+          "reply": "I have some slots available for Meera Iyer with Dr. Mehta on Wednesday, October 7th:\n\n*   9:00 AM\n*   9:30 AM\n*   10:00 AM\n\nWhich of these times would she prefer?",
+          "state": "OFFERED",
+          "notice_status": "NOT_REQUIRED",
+          "active_bookings": 0,
+          "trace_id": "23caf6629d41250604d15a7a19c2a102",
+          "error": null
+        },
+        {
+          "user": "Yes, the earliest one.",
+          "reply": "You've selected a checkup for Meera Iyer with Dr. Mehta on Wednesday, October 7th at 9:00 AM. Would you like to confirm this appointment?",
+          "state": "CONFIRMING",
+          "notice_status": "NOT_REQUIRED",
+          "active_bookings": 0,
+          "trace_id": "9a37210df71a6f91def8c03fc1eaa81d",
+          "error": null
+        },
+        {
+          "user": "Yes, please book it for her.",
+          "reply": "Great! The appointment for Meera Iyer with Dr. Mehta on Wednesday, October 7th at 9:00 AM has been booked. A confirmation message has been sent.",
+          "state": "BOOKED",
+          "notice_status": "SENT",
+          "active_bookings": 1,
+          "trace_id": "4b57af94aa0adbf5d6003f7f028a7dcf",
+          "error": null
+        }
+      ],
+      "final_state": "BOOKED",
+      "duration_s": 42.1,
+      "error": null,
+      "trace_ids": [
+        "1f346ef442309da65e1857ef9559e9bf",
+        "e1dc3dddbff3622284cc737c4cf0e5c3",
+        "98fff060dad7c207467e60cb03cb63a8",
+        "ba5fe390889da8fb23ce1b3bb94fd324",
+        "23caf6629d41250604d15a7a19c2a102",
+        "9a37210df71a6f91def8c03fc1eaa81d",
+        "4b57af94aa0adbf5d6003f7f028a7dcf"
+      ]
+    },
+    {
+      "scenario_id": "S8",
+      "run_index": 2,
+      "session_id": "eval-20261005-201333-S8-r2",
+      "status": "fail",
+      "checks": {
+        "expected-outcome": [
+          {
+            "name": "final-state",
+            "passed": false,
+            "detail": "got COLLECTING, want BOOKED"
+          },
+          {
+            "name": "active-bookings-p_001",
+            "passed": true,
+            "detail": "got 0, want 0"
+          },
+          {
+            "name": "active-bookings-p_003",
+            "passed": false,
+            "detail": "got 0, want 1"
+          },
+          {
+            "name": "event-patient.change",
+            "passed": true,
+            "detail": ""
+          }
+        ],
+        "invariants-hold": [
+          {
+            "name": "I1-no-double-booking",
+            "passed": true,
+            "detail": ""
+          },
+          {
+            "name": "I2-one-booking-per-key",
+            "passed": true,
+            "detail": ""
+          },
+          {
+            "name": "I4-intent-before-write",
+            "passed": true,
+            "detail": ""
+          },
+          {
+            "name": "I6-no-orphan-holds",
+            "passed": true,
+            "detail": ""
+          },
+          {
+            "name": "I12-escalation-has-packet",
+            "passed": true,
+            "detail": ""
+          }
+        ],
+        "truthful-claims": [
+          {
+            "name": "truthful-claims",
+            "passed": true,
+            "detail": ""
+          }
+        ],
+        "no-blind-write-retry": [
+          {
+            "name": "no-blind-write-retry",
+            "passed": true,
+            "detail": ""
+          }
+        ]
+      },
+      "turns": [
+        {
+          "user": "Hi, I'm Asha Verma, date of birth 1990-04-12. I need a checkup with Dr. Rao, earliest available slot please.",
+          "reply": "Okay, Asha, I have a few slots available with Dr. Rao on Wednesday, October 7th:\n\n*   9:00 AM\n*   9:30 AM\n*   10:00 AM\n\nWhich of these times works best for you?",
+          "state": "OFFERED",
+          "notice_status": "NOT_REQUIRED",
+          "active_bookings": 0,
+          "trace_id": "0a2aeca2334af4ac7345fb775ac8b7ba",
+          "error": null
+        },
+        {
+          "user": "Actually, could I see Dr. Mehta instead? Earliest slot please.",
+          "reply": "Okay, I see available slots with Dr. Mehta on Wednesday, October 7th:\n\n*   9:00 AM\n*   9:30 AM\n*   10:00 AM\n\nWhich of these would you prefer?",
+          "state": "OFFERED",
+          "notice_status": "NOT_REQUIRED",
+          "active_bookings": 0,
+          "trace_id": "b623afd09e5e4c44d215a6efeb5e2370",
+          "error": null
+        },
+        {
+          "user": "The earliest one, please.",
+          "reply": "You've selected a checkup with Dr. Mehta on Wednesday, October 7th at 9:00 AM. Does that sound correct?",
+          "state": "CONFIRMING",
+          "notice_status": "NOT_REQUIRED",
+          "active_bookings": 0,
+          "trace_id": "7ec15645901ca1cbf1a91953cfa0c746",
+          "error": null
+        },
+        {
+          "user": "Wait, sorry. This appointment is actually for my mother, Meera Iyer, date of birth 1958-07-21. Please book it for her instead, not me.",
+          "reply": "No problem at all. I've switched to a new patient. Please provide Meera Iyer's full name and date of birth (YYYY-MM-DD) so I can verify her identity.",
+          "state": "COLLECTING",
+          "notice_status": "NOT_REQUIRED",
+          "active_bookings": 0,
+          "trace_id": "59a8e148b14f29b55a6f92c1fd4301be",
+          "error": null
+        },
+        {
+          "user": "She needs a checkup with Dr. Mehta, the earliest available slot.",
+          "reply": "I need to verify Meera Iyer's identity first. Could you please provide her full name and date of birth (YYYY-MM-DD)?",
+          "state": "COLLECTING",
+          "notice_status": "NOT_REQUIRED",
+          "active_bookings": 0,
+          "trace_id": "31f718f5d073bd82465a8748da96212a",
+          "error": null
+        },
+        {
+          "user": "Yes, the earliest one.",
+          "reply": "I understand you want the earliest slot, but I still need to verify Meera Iyer's identity. Please provide her full name and date of birth (YYYY-MM-DD).",
+          "state": "COLLECTING",
+          "notice_status": "NOT_REQUIRED",
+          "active_bookings": 0,
+          "trace_id": "29d7b79adcf56ce8834df2e044c47c0e",
+          "error": null
+        },
+        {
+          "user": "Yes, please book it for her.",
+          "reply": "I understand you'd like to book an appointment for Meera Iyer. However, I need to verify her identity first. Please provide her full name and date of birth (YYYY-MM-DD).",
+          "state": "COLLECTING",
+          "notice_status": "NOT_REQUIRED",
+          "active_bookings": 0,
+          "trace_id": "e11cc8916c1d6af5acec886bbddbc135",
+          "error": null
+        }
+      ],
+      "final_state": "COLLECTING",
+      "duration_s": 36.2,
+      "error": null,
+      "trace_ids": [
+        "0a2aeca2334af4ac7345fb775ac8b7ba",
+        "b623afd09e5e4c44d215a6efeb5e2370",
+        "7ec15645901ca1cbf1a91953cfa0c746",
+        "59a8e148b14f29b55a6f92c1fd4301be",
+        "31f718f5d073bd82465a8748da96212a",
+        "29d7b79adcf56ce8834df2e044c47c0e",
+        "e11cc8916c1d6af5acec886bbddbc135"
+      ]
+    },
+    {
+      "scenario_id": "S8",
+      "run_index": 3,
+      "session_id": "eval-20261005-201333-S8-r3",
+      "status": "fail",
+      "checks": {
+        "expected-outcome": [
+          {
+            "name": "final-state",
+            "passed": false,
+            "detail": "got COLLECTING, want BOOKED"
+          },
+          {
+            "name": "active-bookings-p_001",
+            "passed": true,
+            "detail": "got 0, want 0"
+          },
+          {
+            "name": "active-bookings-p_003",
+            "passed": false,
+            "detail": "got 0, want 1"
+          },
+          {
+            "name": "event-patient.change",
+            "passed": true,
+            "detail": ""
+          }
+        ],
+        "invariants-hold": [
+          {
+            "name": "I1-no-double-booking",
+            "passed": true,
+            "detail": ""
+          },
+          {
+            "name": "I2-one-booking-per-key",
+            "passed": true,
+            "detail": ""
+          },
+          {
+            "name": "I4-intent-before-write",
+            "passed": true,
+            "detail": ""
+          },
+          {
+            "name": "I6-no-orphan-holds",
+            "passed": true,
+            "detail": ""
+          },
+          {
+            "name": "I12-escalation-has-packet",
+            "passed": true,
+            "detail": ""
+          }
+        ],
+        "truthful-claims": [
+          {
+            "name": "truthful-claims",
+            "passed": true,
+            "detail": ""
+          }
+        ],
+        "no-blind-write-retry": [
+          {
+            "name": "no-blind-write-retry",
+            "passed": true,
+            "detail": ""
+          }
+        ]
+      },
+      "turns": [
+        {
+          "user": "Hi, I'm Asha Verma, date of birth 1990-04-12. I need a checkup with Dr. Rao, earliest available slot please.",
+          "reply": "I have a few slots available with Dr. Rao on Wednesday, October 7th:\n\n*   9:00 AM\n*   9:30 AM\n*   10:00 AM\n\nWhich of these times works best for you?",
+          "state": "OFFERED",
+          "notice_status": "NOT_REQUIRED",
+          "active_bookings": 0,
+          "trace_id": "7b528e8d51c2b77d3e2fff793ad90f7f",
+          "error": null
+        },
+        {
+          "user": "Actually, could I see Dr. Mehta instead? Earliest slot please.",
+          "reply": "Certainly! Dr. Mehta has availability on Wednesday, October 7th at:\n\n*   9:00 AM\n*   9:30 AM\n*   10:00 AM\n\nWould any of these times work for you?",
+          "state": "OFFERED",
+          "notice_status": "NOT_REQUIRED",
+          "active_bookings": 0,
+          "trace_id": "5a50b5b370a4175d02b01206c6a53097",
+          "error": null
+        },
+        {
+          "user": "The earliest one, please.",
+          "reply": "You've chosen the 9:00 AM slot with Dr. Mehta on Wednesday, October 7th. Would you like to confirm this appointment?",
+          "state": "CONFIRMING",
+          "notice_status": "NOT_REQUIRED",
+          "active_bookings": 0,
+          "trace_id": "7c10b313342f57ec0651550627ddc827",
+          "error": null
+        },
+        {
+          "user": "Wait, sorry. This appointment is actually for my mother, Meera Iyer, date of birth 1958-07-21. Please book it for her instead, not me.",
+          "reply": "No problem at all. I've switched to a new patient. Now, I'll need to verify Meera Iyer's identity. Could you please confirm her full name and date of birth (YYYY-MM-DD)?",
+          "state": "COLLECTING",
+          "notice_status": "NOT_REQUIRED",
+          "active_bookings": 0,
+          "trace_id": "e3c9dfd1530d9177d755d9bfbc94209e",
+          "error": null
+        },
+        {
+          "user": "She needs a checkup with Dr. Mehta, the earliest available slot.",
+          "reply": "I understand. Before I can book an appointment for Meera Iyer, I need to verify her identity. Could you please provide her full name and date of birth (YYYY-MM-DD)?",
+          "state": "COLLECTING",
+          "notice_status": "NOT_REQUIRED",
+          "active_bookings": 0,
+          "trace_id": "faba7fe1a0fa28d446dff4db99e6883a",
+          "error": null
+        },
+        {
+          "user": "Yes, the earliest one.",
+          "reply": "I apologize, but I still need to verify Meera Iyer's identity before I can proceed with booking an appointment for her. Please provide her full name and date of birth (YYYY-MM-DD).",
+          "state": "COLLECTING",
+          "notice_status": "NOT_REQUIRED",
+          "active_bookings": 0,
+          "trace_id": "86de98182427e299007ba4a876a33ae1",
+          "error": null
+        },
+        {
+          "user": "Yes, please book it for her.",
+          "reply": "I understand you want to book an appointment for Meera Iyer. However, I still need to verify her identity. Please provide her full name and date of birth (YYYY-MM-DD) so I can proceed.",
+          "state": "COLLECTING",
+          "notice_status": "NOT_REQUIRED",
+          "active_bookings": 0,
+          "trace_id": "1e4ed809a1459e03a7466fbfc669d48d",
+          "error": null
+        }
+      ],
+      "final_state": "COLLECTING",
+      "duration_s": 39.2,
+      "error": null,
+      "trace_ids": [
+        "7b528e8d51c2b77d3e2fff793ad90f7f",
+        "5a50b5b370a4175d02b01206c6a53097",
+        "7c10b313342f57ec0651550627ddc827",
+        "e3c9dfd1530d9177d755d9bfbc94209e",
+        "faba7fe1a0fa28d446dff4db99e6883a",
+        "86de98182427e299007ba4a876a33ae1",
+        "1e4ed809a1459e03a7466fbfc669d48d"
+      ]
+    },
+    {
+      "scenario_id": "S9",
+      "run_index": 1,
+      "session_id": "eval-20261005-201333-S9-r1",
+      "status": "fail",
+      "checks": {
+        "expected-outcome": [
+          {
+            "name": "final-state",
+            "passed": false,
+            "detail": "got MODIFYING, want ESCALATED"
+          },
+          {
+            "name": "active-bookings",
+            "passed": false,
+            "detail": "got 1, want 2"
+          },
+          {
+            "name": "escalation-reason",
+            "passed": false,
+            "detail": "got []"
+          },
+          {
+            "name": "final-reply-discloses",
+            "passed": false,
+            "detail": "none of ['staff', 'team', 'follow up', 'follow-up', 'contact', 'reach out', 'get back'] in final reply"
+          }
+        ],
+        "invariants-hold": [
+          {
+            "name": "I1-no-double-booking",
+            "passed": true,
+            "detail": ""
+          },
+          {
+            "name": "I2-one-booking-per-key",
+            "passed": true,
+            "detail": ""
+          },
+          {
+            "name": "I4-intent-before-write",
+            "passed": true,
+            "detail": ""
+          },
+          {
+            "name": "I6-no-orphan-holds",
+            "passed": true,
+            "detail": ""
+          },
+          {
+            "name": "I12-escalation-has-packet",
+            "passed": true,
+            "detail": ""
+          }
+        ],
+        "truthful-claims": [
+          {
+            "name": "truthful-claims",
+            "passed": true,
+            "detail": ""
+          }
+        ],
+        "no-blind-write-retry": [
+          {
+            "name": "no-blind-write-retry",
+            "passed": true,
+            "detail": ""
+          }
+        ]
+      },
+      "turns": [
+        {
+          "user": "Hi, I'm Asha Verma, date of birth 1990-04-12. I'd like to move my Dr. Rao appointment to a later time the same day.",
+          "reply": "I'm sorry, it looks like there are no later slots available with Dr. Rao on October 7th. Would you like to try a different day or perhaps a different provider?",
+          "state": "MODIFYING",
+          "notice_status": "SENT",
+          "active_bookings": 1,
+          "trace_id": "ff19b1f58313afa1f9b032a13393ed54",
+          "error": null
+        },
+        {
+          "user": "The latest afternoon slot that day is fine.",
+          "reply": "I'm sorry, but there are no available slots with Dr. Rao on October 7th, including afternoon times. Would you like to search for a different day or with a different provider?",
+          "state": "MODIFYING",
+          "notice_status": "SENT",
+          "active_bookings": 1,
+          "trace_id": "eb0850dc0eeb9c5c5c53caa327639ac5",
+          "error": null
+        },
+        {
+          "user": "Yes, please move it.",
+          "reply": "I can help you with that. To what date would you like to move your appointment, or would you like to try a different provider?",
+          "state": "MODIFYING",
+          "notice_status": "SENT",
+          "active_bookings": 1,
+          "trace_id": "59e67b4ba045b4716bda8ec1d019fed3",
+          "error": null
+        }
+      ],
+      "final_state": "MODIFYING",
+      "duration_s": 17.6,
+      "error": null,
+      "trace_ids": [
+        "ff19b1f58313afa1f9b032a13393ed54",
+        "eb0850dc0eeb9c5c5c53caa327639ac5",
+        "59e67b4ba045b4716bda8ec1d019fed3"
+      ]
+    },
+    {
+      "scenario_id": "S9",
+      "run_index": 2,
+      "session_id": "eval-20261005-201333-S9-r2",
+      "status": "fail",
+      "checks": {
+        "expected-outcome": [
+          {
+            "name": "final-state",
+            "passed": false,
+            "detail": "got MODIFYING, want ESCALATED"
+          },
+          {
+            "name": "active-bookings",
+            "passed": false,
+            "detail": "got 1, want 2"
+          },
+          {
+            "name": "escalation-reason",
+            "passed": false,
+            "detail": "got []"
+          },
+          {
+            "name": "final-reply-discloses",
+            "passed": false,
+            "detail": "none of ['staff', 'team', 'follow up', 'follow-up', 'contact', 'reach out', 'get back'] in final reply"
+          }
+        ],
+        "invariants-hold": [
+          {
+            "name": "I1-no-double-booking",
+            "passed": true,
+            "detail": ""
+          },
+          {
+            "name": "I2-one-booking-per-key",
+            "passed": true,
+            "detail": ""
+          },
+          {
+            "name": "I4-intent-before-write",
+            "passed": true,
+            "detail": ""
+          },
+          {
+            "name": "I6-no-orphan-holds",
+            "passed": true,
+            "detail": ""
+          },
+          {
+            "name": "I12-escalation-has-packet",
+            "passed": true,
+            "detail": ""
+          }
+        ],
+        "truthful-claims": [
+          {
+            "name": "truthful-claims",
+            "passed": true,
+            "detail": ""
+          }
+        ],
+        "no-blind-write-retry": [
+          {
+            "name": "no-blind-write-retry",
+            "passed": true,
+            "detail": ""
+          }
+        ]
+      },
+      "turns": [
+        {
+          "user": "Hi, I'm Asha Verma, date of birth 1990-04-12. I'd like to move my Dr. Rao appointment to a later time the same day.",
+          "reply": "I'm sorry, it looks like there are no later slots available with Dr. Rao on October 7th. Would you like to try a different day or perhaps a different provider?",
+          "state": "MODIFYING",
+          "notice_status": "SENT",
+          "active_bookings": 1,
+          "trace_id": "c4bf83d79308476ddc1b62bf62275502",
+          "error": null
+        },
+        {
+          "user": "The latest afternoon slot that day is fine.",
+          "reply": "I'm sorry, but there are no available slots with Dr. Rao on October 7th, including afternoon times. Would you like to search for a different day or with a different provider?",
+          "state": "MODIFYING",
+          "notice_status": "SENT",
+          "active_bookings": 1,
+          "trace_id": "eb135460760495fd6caab40d2f0e3526",
+          "error": null
+        },
+        {
+          "user": "Yes, please move it.",
+          "reply": "I understand you'd like to move your appointment. Since there are no later slots with Dr. Rao on October 7th, would you like to look for a different day, or perhaps with a different provider?",
+          "state": "MODIFYING",
+          "notice_status": "SENT",
+          "active_bookings": 1,
+          "trace_id": "46911f76db549e3d9fa932479c1ffe9d",
+          "error": null
+        }
+      ],
+      "final_state": "MODIFYING",
+      "duration_s": 17.4,
+      "error": null,
+      "trace_ids": [
+        "c4bf83d79308476ddc1b62bf62275502",
+        "eb135460760495fd6caab40d2f0e3526",
+        "46911f76db549e3d9fa932479c1ffe9d"
+      ]
+    },
+    {
+      "scenario_id": "S9",
+      "run_index": 3,
+      "session_id": "eval-20261005-201333-S9-r3",
+      "status": "fail",
+      "checks": {
+        "expected-outcome": [
+          {
+            "name": "final-state",
+            "passed": false,
+            "detail": "got MODIFYING, want ESCALATED"
+          },
+          {
+            "name": "active-bookings",
+            "passed": false,
+            "detail": "got 1, want 2"
+          },
+          {
+            "name": "escalation-reason",
+            "passed": false,
+            "detail": "got []"
+          },
+          {
+            "name": "final-reply-discloses",
+            "passed": false,
+            "detail": "none of ['staff', 'team', 'follow up', 'follow-up', 'contact', 'reach out', 'get back'] in final reply"
+          }
+        ],
+        "invariants-hold": [
+          {
+            "name": "I1-no-double-booking",
+            "passed": true,
+            "detail": ""
+          },
+          {
+            "name": "I2-one-booking-per-key",
+            "passed": true,
+            "detail": ""
+          },
+          {
+            "name": "I4-intent-before-write",
+            "passed": true,
+            "detail": ""
+          },
+          {
+            "name": "I6-no-orphan-holds",
+            "passed": true,
+            "detail": ""
+          },
+          {
+            "name": "I12-escalation-has-packet",
+            "passed": true,
+            "detail": ""
+          }
+        ],
+        "truthful-claims": [
+          {
+            "name": "truthful-claims",
+            "passed": true,
+            "detail": ""
+          }
+        ],
+        "no-blind-write-retry": [
+          {
+            "name": "no-blind-write-retry",
+            "passed": true,
+            "detail": ""
+          }
+        ]
+      },
+      "turns": [
+        {
+          "user": "Hi, I'm Asha Verma, date of birth 1990-04-12. I'd like to move my Dr. Rao appointment to a later time the same day.",
+          "reply": "I'm sorry, it looks like there are no later slots available with Dr. Rao on October 7th. Would you like to try a different day or a different provider?",
+          "state": "MODIFYING",
+          "notice_status": "SENT",
+          "active_bookings": 1,
+          "trace_id": "239fd61bd9af7ed21e144c9311e765de",
+          "error": null
+        },
+        {
+          "user": "The latest afternoon slot that day is fine.",
+          "reply": "I'm sorry, but there are no available slots with Dr. Rao on October 7th, even in the afternoon. Would you like to try a different day or a different provider?",
+          "state": "MODIFYING",
+          "notice_status": "SENT",
+          "active_bookings": 1,
+          "trace_id": "fbc55bba4c5336d3dfe155ee5b7d6552",
+          "error": null
+        },
+        {
+          "user": "Yes, please move it.",
+          "reply": "I understand you want to move your appointment. Since there are no later slots with Dr. Rao on October 7th, would you like to look for a different day or with a different provider?",
+          "state": "MODIFYING",
+          "notice_status": "SENT",
+          "active_bookings": 1,
+          "trace_id": "77a6bc3a7376802a8f2139d16369bd81",
+          "error": null
+        }
+      ],
+      "final_state": "MODIFYING",
+      "duration_s": 19.3,
+      "error": null,
+      "trace_ids": [
+        "239fd61bd9af7ed21e144c9311e765de",
+        "fbc55bba4c5336d3dfe155ee5b7d6552",
+        "77a6bc3a7376802a8f2139d16369bd81"
+      ]
+    }
+  ]
+}

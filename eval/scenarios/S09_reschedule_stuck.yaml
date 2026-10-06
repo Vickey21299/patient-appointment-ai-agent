@@ -1,0 +1,18 @@
+id: S9
+title: Reschedule where cancelling the old booking fails
+primary_failure_class: F5
+exercises: {transitions: [T18, T21], invariants: [I3, I12]}
+why_it_matters: Make-before-break. Both bookings stay live, a human is told, and the agent never claims success.
+setup:
+  prebook: {patient: ["Asha Verma", "1990-04-12"], provider_id: dr_rao, slot_index: 0}
+faults:
+  - {tool: cancel_appointment, fault: error_503, calls: all}
+turns:
+  - user: "Hi, I'm Asha Verma, date of birth 1990-04-12. I'd like to move my Dr. Rao appointment to a later time the same day."
+  - user: "The latest afternoon slot that day is fine."
+  - user: "Yes, please move it."
+expect:
+  final_state: ESCALATED
+  escalation_reason: DUPLICATE_LIVE
+  active_bookings: 2
+  final_reply_mentions_any: ["staff", "team", "follow up", "follow-up", "contact", "reach out", "get back"]

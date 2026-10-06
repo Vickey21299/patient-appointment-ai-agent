@@ -1,0 +1,32 @@
+# Secrets (copy .env.example to .env)
+.env
+.env.*
+!.env.example
+
+# Python
+.venv/
+venv/
+__pycache__/
+*.py[cod]
+*.egg-info/
+build/
+dist/
+.pytest_cache/
+
+# Runtime state (recreated on demand)
+*.db
+*.db-journal
+*.db-wal
+*.db-shm
+logs/
+ui_sessions/
+eval/.runs/
+
+# Editor / OS
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+
+# Claude Code local settings (agents/ and skills/ are shared)
+.claude/settings.local.json

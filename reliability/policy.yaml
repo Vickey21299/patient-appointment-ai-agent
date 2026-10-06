@@ -1,0 +1,30 @@
+# Retry / timeout / budget policy (RELIABILITY_SPEC §3 "Retry policy").
+# Changing a number here is a "policy-config" improvement. Re-run the scenario matrix afterwards.
+reads:
+  max_attempts: 3
+  backoff_s: [0.5, 1.0, 2.0]
+  jitter: 0.25
+  deadline_s: 5.0
+writes:
+  max_attempts_before_known: 1          # I7: never re-send while the outcome is unknown
+  max_retries_after_absent: 2           # T16: retry with the SAME key once confirmed absent
+reconcile:
+  max_reads: 3
+  absent_confirmations: 2
+  max_seconds: 60
+budget:
+  max_failed_calls_per_appointment: 8   # F6
+circuit_breaker:
+  failure_threshold: 5                  # consecutive failures
+  window_s: 60
+  half_open_after_s: 30
+timeouts:
+  hold_ttl_s: 600
+  idle_timeout_s: 1800
+  nudge_at_fraction: 0.5
+  offered_results_stale_s: 300
+saga:
+  cancel_old_retries: 3
+outbox:
+  max_attempts: 3
+  retry_spacing_s: 200

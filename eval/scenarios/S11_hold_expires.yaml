@@ -1,0 +1,15 @@
+id: S11
+title: Hold expires before the patient says yes
+primary_failure_class: F8
+exercises: {transitions: [T09, T06, T08, T11], invariants: [I3, I5]}
+why_it_matters: A slow patient must never be booked on an expired hold, and must be asked again.
+turns:
+  - user: "Hi, I'm Asha Verma, date of birth 1990-04-12. I need a checkup with Dr. Rao, earliest available slot please."
+  - user: "The earliest one, please."
+  - {advance_minutes: 11, user: "Yes, please book it."}
+  - user: "Yes, I confirm. Please book it."
+expect:
+  final_state: BOOKED
+  active_bookings: 1
+  tool_calls: {book_appointment: 1}
+  tool_calls_min: {hold_slot: 2}

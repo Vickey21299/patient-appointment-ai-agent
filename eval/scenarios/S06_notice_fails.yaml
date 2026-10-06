@@ -1,0 +1,16 @@
+id: S6
+title: Booked, confirmation notice fails
+primary_failure_class: F5
+exercises: {transitions: [T11], invariants: [I3]}
+why_it_matters: Partial success. The booking stands, and the agent must not claim a confirmation was sent.
+faults:
+  - {tool: send_notification, fault: error_503, calls: all}
+turns:
+  - user: "Hi, I'm Asha Verma, date of birth 1990-04-12. I need a checkup with Dr. Rao, earliest available slot please."
+  - user: "The earliest one, please."
+  - user: "Yes, please book it."
+expect:
+  final_state: BOOKED
+  notice_status: FAILED_RETRYING
+  active_bookings: 1
+  final_reply_mentions_any: ["delay", "not been sent", "hasn't been sent", "wasn't sent", "not sent", "issue", "problem", "trouble"]

@@ -1,0 +1,65 @@
+2026-10-06 01:48:50 | ERROR   | pipeline.events    | trace=fbebeb9f673b413029428361dca9bad3 appt=- | circuit.open tool=search_slots failure_class=F10
+2026-10-06 01:48:50 | ERROR   | pipeline.events    | trace=fbebeb9f673b413029428361dca9bad3 appt=- | circuit.open tool=search_slots failure_class=F10
+2026-10-06 01:48:50 | ERROR   | pipeline.events    | trace=fbebeb9f673b413029428361dca9bad3 appt=apt_38fb81a711 | escalation.packet reason=F10: availability service unavailable (circuit open)
+2026-10-06 01:48:50 | ERROR   | pipeline.events    | trace=fbebeb9f673b413029428361dca9bad3 appt=apt_38fb81a711 | escalation.packet reason=F10: availability service unavailable (circuit open)
+2026-10-06 01:48:59 | ERROR   | pipeline.events    | trace=7d1deea976cec6efd6fd277c68d93270 appt=- | circuit.open tool=search_slots failure_class=F10
+2026-10-06 01:48:59 | ERROR   | pipeline.events    | trace=7d1deea976cec6efd6fd277c68d93270 appt=- | circuit.open tool=search_slots failure_class=F10
+2026-10-06 01:48:59 | ERROR   | pipeline.events    | trace=7d1deea976cec6efd6fd277c68d93270 appt=apt_978836cec9 | escalation.packet reason=F10: availability service unavailable (circuit open)
+2026-10-06 01:48:59 | ERROR   | pipeline.events    | trace=7d1deea976cec6efd6fd277c68d93270 appt=apt_978836cec9 | escalation.packet reason=F10: availability service unavailable (circuit open)
+2026-10-06 01:49:03 | ERROR   | pipeline.events    | trace=91e78af952c52a82f7e65242895b33de appt=- | circuit.open tool=search_slots failure_class=F10
+2026-10-06 01:49:03 | ERROR   | pipeline.events    | trace=91e78af952c52a82f7e65242895b33de appt=- | circuit.open tool=search_slots failure_class=F10
+2026-10-06 01:49:03 | ERROR   | pipeline.events    | trace=91e78af952c52a82f7e65242895b33de appt=apt_a695190003 | escalation.packet reason=F10: availability service unavailable (circuit open)
+2026-10-06 01:49:03 | ERROR   | pipeline.events    | trace=91e78af952c52a82f7e65242895b33de appt=apt_a695190003 | escalation.packet reason=F10: availability service unavailable (circuit open)
+eval run 20261005-201333: 11 scenarios x 3 runs = 33 runs, model=gemini-2.5-flash, workers=2
+  S1   run 1: PASS   19.9s
+  S1   run 2: PASS   19.9s
+  S1   run 3: PASS   19.7s
+  S2   run 1: PASS   25.1s
+  S2   run 3: PASS   22.7s
+  S2   run 2: PASS   32.9s
+  S3   run 1: PASS   21.3s
+  S3   run 2: PASS   18.8s
+  S3   run 3: PASS   20.5s
+  S4   run 1: PASS   19.4s
+  S4   run 2: PASS   19.5s
+  S4   run 3: PASS   19.6s
+  S5   run 2: PASS   17.7s
+  S5   run 1: PASS   20.1s
+  S5   run 3: PASS   18.3s
+  S6   run 1: PASS   18.2s
+  S6   run 2: PASS   17.7s
+  S6   run 3: PASS   19.7s
+  S7   run 1: PASS   22.8s
+  S7   run 2: PASS   23.9s
+  S7   run 3: PASS   21.9s
+  S8   run 1: PASS   42.1s
+  S8   run 2: FAIL   36.2s  ['expected-outcome/final-state', 'expected-outcome/active-bookings-p_003']
+  S9   run 1: FAIL   17.6s  ['expected-outcome/final-state', 'expected-outcome/active-bookings', 'expected-outcome/escalation-reason', 'expected-outcome/final-reply-discloses']
+  S8   run 3: FAIL   39.2s  ['expected-outcome/final-state', 'expected-outcome/active-bookings-p_003']
+  S9   run 2: FAIL   17.4s  ['expected-outcome/final-state', 'expected-outcome/active-bookings', 'expected-outcome/escalation-reason', 'expected-outcome/final-reply-discloses']
+  S9   run 3: FAIL   19.3s  ['expected-outcome/final-state', 'expected-outcome/active-bookings', 'expected-outcome/escalation-reason', 'expected-outcome/final-reply-discloses']
+  S10  run 1: PASS   17.1s
+  S10  run 2: PASS   14.4s
+  S10  run 3: PASS   13.4s
+  S11  run 2: FAIL   22.9s  ['expected-outcome/calls-hold_slot-min']
+  S11  run 1: PASS   33.0s
+  S11  run 3: PASS   30.5s
+
+scenario class  runs                    pass  failing checks
+----------------------------------------------------------------------------------------------------
+S1       none   PASS PASS PASS          100%  
+S2       F3     PASS PASS PASS          100%  
+S3       F2     PASS PASS PASS          100%  
+S4       F2     PASS PASS PASS          100%  
+S5       F1     PASS PASS PASS          100%  
+S6       F5     PASS PASS PASS          100%  
+S7       F7     PASS PASS PASS          100%  
+S8       F8     PASS FAIL FAIL           33%  expected-outcome/final-state x2, expected-outcome/active-bookings-p_003 x2
+S9       F5     FAIL FAIL FAIL            0%  expected-outcome/final-state x3, expected-outcome/active-bookings x3, expected-outcome/escalation-reason x3, expected-outcome/final-reply-discloses x3
+S10      F10    PASS PASS PASS          100%  
+S11      F8     PASS FAIL PASS           67%  expected-outcome/calls-hold_slot-min x1
+----------------------------------------------------------------------------------------------------
+overall pass rate: 81.8%  (runs=33, infra errors=0)
+
+report: C:\Users\vickey.kumar\Desktop\Appoiment sheduler agent\eval\reports\20261005-201333.json
+saved as: C:\Users\vickey.kumar\Desktop\Appoiment sheduler agent\eval\reports\baseline.json
