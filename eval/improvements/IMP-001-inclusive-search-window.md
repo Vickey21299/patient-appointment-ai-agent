@@ -2,7 +2,7 @@
 
 | | |
 |---|---|
-| Trigger | Baseline ([20261005-201333](../../reports/20261005-201333.json)): **S9 0% (0/3)**, overall 81.8% |
+| Trigger | Baseline ([20261005-201333](../reports/20261005-201333.json)): **S9 0% (0/3)**, overall 81.8% |
 | Taxonomy | Not an F-class failure. Contract skew made T03 `no_slots` fire wrongly · layer: **tool-contract** |
 | Release | 0.2.0 → 0.2.1 |
 
